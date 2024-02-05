@@ -10,13 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 export const MainNav = () => {
-  const { OmnikadoLogo } = assets; 
-  const navigation = [
-    { name: "Product", href: "#" },
-    { name: "Features", href: "#" },
-    { name: "Marketplace", href: "#" },
-    { name: "Company", href: "#" },
-  ];
+  const { OmnikadoLogo } = assets;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <div>
