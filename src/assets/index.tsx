@@ -10,4 +10,13 @@ export const assets = {
   SteamLogo: "/assets/steam.svg",
   VanillaLogo: "/assets/vanilla.svg",
   WalmartLogo: "/assets/walmart.svg",
+  WalmartGiftCard: "/assets/gc-walmart.svg",
+  SteamGiftCard: "/assets/gc-steam.svg",
+  NordstromGiftCard: "/assets/gc-nordstrom.svg",
+  NikeGiftCard: "/assets/gc-nike.svg",
+  AmazonGiftCard: "/assets/gc-amazon.svg",
+  SephoraGiftCard: "/assets/gc-sephora.svg",
+  VanillaGiftCard: "/assets/gc-vanilla.svg",
+  GooglePlayGiftCard: "/assets/gc-gplay.svg",
+  EbayGiftCard: "/assets/gc-ebay.svg",
 };
