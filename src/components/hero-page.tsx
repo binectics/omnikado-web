@@ -174,32 +174,37 @@ export const HeroPage = () => {
         <div className="mx-12  lg:justify-center flex">
           <ul className="list-none text-primary font-sm">
             <li className="sm:block lg:inline p-2 mr-4">
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a
+                target="__blank"
+                href="/docs/refund.pdf"
+                className="hover:underline me-4 md:me-6"
+              >
                 Refund Policy
               </a>
             </li>
             <li className="sm:block lg:inline p-2 mr-4">
-              <a href="#" className="hover:underline me-4 md:me-6">
-                Dislaimer
+              <a
+                target="__blank"
+                href="/docs/terms-of-sale.pdf"
+                className="hover:underline me-4 md:me-6"
+              >
+                Terms of Sale
               </a>
             </li>
             <li className="sm:block lg:inline p-2 mr-4">
-              <a href="#" className="hover:underline me-4 md:me-6">
-                Pricing
-              </a>
-            </li>
-            <li className="sm:block lg:inline p-2 mr-4">
-              <a href="#" className="hover:underline me-4 md:me-6">
-                Careers
-              </a>
-            </li>
-            <li className="sm:block lg:inline p-2 mr-4">
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a
+                href="matilto:support@omnikado.com"
+                className="hover:underline me-4 md:me-6"
+              >
                 Help
               </a>
             </li>
             <li className="sm:block lg:inline p-2 mr-4">
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a
+                target="__blank"
+                href="/docs/privacy.pdf"
+                className="hover:underline me-4 md:me-6"
+              >
                 Privacy
               </a>
             </li>
@@ -218,17 +223,29 @@ export const HeroPage = () => {
           </span>
           <ul className="flex flex-wrap items-center mt-3 text-md font-medium text-primary sm:mt-0">
             <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a
+                target="__blank"
+                href="/docs/terms-of-service.pdf"
+                className="hover:underline me-4 md:me-6"
+              >
                 Terms
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a
+                target="__blank"
+                href="/docs/privacy.pdf"
+                className="hover:underline me-4 md:me-6"
+              >
                 Privacy
               </a>
             </li>
             <li>
-              <a href="#" className="hover:underline me-4 md:me-6">
+              <a
+                target="__blank"
+                href="/docs/terms-of-service.pdf"
+                className="hover:underline me-4 md:me-6"
+              >
                 Cookies
               </a>
             </li>
