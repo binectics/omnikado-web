@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
+import Footer from "@/components/Footer";
+import { MainNav } from "@/components/main-nav";
 
 export const metadata: Metadata = {
   title: "Omnikado",
@@ -17,7 +19,11 @@ export default function RootLayout({
       <body
         className={cn("min-h-screen bg-background font-primary antialiased")}
       >
-        {children}
+        <main className="mx-auto container max-w-[1280px]">
+          <MainNav />
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );
