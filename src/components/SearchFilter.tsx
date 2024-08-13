@@ -1,26 +1,61 @@
 "use client";
+import { cn } from "@/lib/utils";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { useEffect, useState } from "react";
 
-import { QueueListIcon } from "@heroicons/react/24/outline";
+const filters = ["all", "payment-cards", "gift-cards"];
 
 export default function SearchFilter() {
+  const handleFilter = (filter: string) => {
+    console.log(filter);
+  };
+
   return (
-    <div className="flex flex-row justify-between">
-      <div className="sm:basis-3/4">
+    <div className="flex md:justify-between flex-col md:flex-row gap-y-5 justify-center">
+      <div className="border border-input flex items-center gap-x-2 py-3 px-[14px] rounded-lg w-full md:max-w-[320px]">
+        <MagnifyingGlassIcon className="size-5 fill-[#667085]" />
         <input
           type="text"
           name="search"
           id="search"
           autoComplete="search"
-          className="block flex-1 bg-transparent py-1.5 pl-5 text-gray-900 placeholder:text-gray-600 focus:ring-0 sm:text-sm sm:leading-6 rounded-lg w-full lg:w-3/12"
-          style={{ border: ".6px solid white" }}
+          className="bg-transparent text-primary placeholder:text-placeholder w-full outline-0 text-base font-header"
           placeholder="Search"
         />
       </div>
-      <div className="3/4">
-        <button className=" bg-transparent py-1.5 px-5 text-white border-white rounded-lg border-[0.6px]">
-          <QueueListIcon className="h-5 w-5 inline" /> Apply filter
-        </button>
-      </div>
+      <FilterList onSelectFilter={handleFilter} filters={filters} />
     </div>
   );
 }
+
+const FilterList = ({
+  filters,
+  onSelectFilter,
+}: {
+  filters: string[];
+  onSelectFilter: (filter: string) => void;
+}) => {
+  const [currentFilter, setCurrentFilter] = useState("all");
+
+  return filters ? (
+    <div className="flex gap-3 md:ml-auto flex-wrap">
+      {filters.map((filter) => (
+        <button
+          key={filter}
+          onClick={() => {
+            setCurrentFilter(filter);
+            onSelectFilter(filter);
+          }}
+          className={cn(
+            "px-4 py-3 rounded-lg font-primary text-xs sm:text-sm capitalize border-input border",
+            currentFilter === filter
+              ? "text-black bg-input font-bold"
+              : "text-primary font-medium"
+          )}
+        >
+          {filter.split("-").join(" ")}
+        </button>
+      ))}
+    </div>
+  ) : null;
+};

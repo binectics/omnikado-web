@@ -34,8 +34,10 @@
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
+    --placeholder: 221, 13%, 46%;
 
     --radius: 0.5rem;
+    --footer: 0, 0%, 76%;
   }
 }
 

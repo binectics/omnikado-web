@@ -17,9 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn("min-h-screen bg-background font-primary antialiased")}
+        className={cn("min-h-[100dvh] bg-background font-primary antialiased")}
       >
-        <main className="mx-auto container max-w-[1280px]">
+        <main className="mx-auto container px-6 sm:px-8 w-screen overflow-x-hidden">
           <MainNav />
           {children}
           <Footer />
