@@ -12,7 +12,7 @@ const BuyGiftCard = () => {
       />
       <Button
         type="submit"
-        className="text-primary text-sm sm:text-base bg-alternate md:min-h-10 rounded-none md:min-w-[180px] font-semibold flex gap-x-2 items-center"
+        className="md:min-h-10 rounded-none md:min-w-[180px] font-semibold flex gap-x-2 items-center"
       >
         <span>Buy a Gift Card</span>
         <ArrowUpRightIcon className="size-5 block" />

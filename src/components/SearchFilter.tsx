@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const filters = ["all", "payment-cards", "gift-cards"];
 
@@ -49,8 +49,8 @@ const FilterList = ({
           className={cn(
             "px-4 py-3 rounded-lg font-primary text-xs sm:text-sm capitalize border-input border",
             currentFilter === filter
-              ? "text-black bg-input font-bold"
-              : "text-primary font-medium"
+              ? "text-black bg-input font-extrabold"
+              : "text-primary"
           )}
         >
           {filter.split("-").join(" ")}

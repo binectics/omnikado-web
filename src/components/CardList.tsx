@@ -2,6 +2,7 @@
 
 import { assets } from "@/assets";
 import { cn } from "@/lib/utils";
+import { useModalActions } from "@/store/modal";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -14,6 +15,7 @@ const pages = [1, 2, 3, 4, 5, 6, 7];
 
 export default function CardList() {
   const [currentPage, setCurrentPage] = useState(1);
+  const { toggleModal } = useModalActions();
 
   const [cards, setCards] = useState([
     { logo: assets.WalmartGiftCard, alt: "Walmart" },
@@ -30,7 +32,7 @@ export default function CardList() {
     <div className="mt-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 justify-items-center justify-between mb-14">
         {cards.map((card) => (
-          <div key={card.alt}>
+          <button onClick={() => toggleModal(true)} key={card.alt}>
             <Image
               src={card.logo}
               alt={card.alt}
@@ -38,7 +40,7 @@ export default function CardList() {
               height={100}
               className="max-h-72 w-full object-contain cursor-pointer"
             />
-          </div>
+          </button>
         ))}
       </div>
       <div className="flex items-center justify-between border-t-2 py-5 border-[#EAECF01A] mx-auto">
