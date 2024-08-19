@@ -1,6 +1,6 @@
 import { assets } from "@/assets";
 import Image from "next/image";
-import CardList from "@/components/CardList";
+import CardList from "@/components/Card/CardList";
 import BuyGiftCard from "@/components/BuyGiftCard";
 import Carousel from "@/components/Carousel";
 import SearchFilter from "@/components/SearchFilter";

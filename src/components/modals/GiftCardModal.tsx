@@ -1,6 +1,6 @@
 "use client";
 import { assets } from "@/assets";
-import { useModalActions } from "@/store/modal";
+import { ModalType, useModalActions } from "@/store/modal";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -8,9 +8,10 @@ import GiftCardForm from "../GiftCardForm";
 import ModalContainer from "../ModalContainer";
 
 export default function GiftCardModal() {
-  const { toggleModal } = useModalActions();
+  const { closeModal } = useModalActions();
+
   return (
-    <ModalContainer>
+    <ModalContainer modal={ModalType.GiftCard}>
       <div className="bg-[#111111] px-4 pb-4 pt-5 sm:p-6 sm:pb-4 font-primary text-left">
         <header className="flex items-center mb-5">
           <div className="flex flex-col gap-x-5 gap-y-1 sm:flex-row sm:items-center">
@@ -26,8 +27,8 @@ export default function GiftCardModal() {
             </span>
           </div>
           <XMarkIcon
-            onClick={() => toggleModal(false)}
-            className="sm:size-6 size-9 ml-auto"
+            onClick={() => closeModal()}
+            className="sm:size-6 size-9 ml-auto cursor-pointer"
             strokeWidth={2}
             stroke="#fff"
           />

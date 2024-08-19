@@ -1,18 +1,29 @@
 import { create } from "zustand";
 
+export enum ModalType {
+  None,
+  GiftCard,
+  Cart,
+}
 interface ModalStoreProps {
-  isOpen: boolean;
+  activeModal: ModalType;
   actions: {
-    toggleModal: (isOpen: boolean) => void;
+    openModal: (modal: ModalType) => void;
+    closeModal: () => void;
   };
 }
 
 const useModalStore = create<ModalStoreProps>((set) => ({
-  isOpen: false,
+  activeModal: ModalType.None,
   actions: {
-    toggleModal: (isOpen) => set({ isOpen }),
+    openModal: (modal: ModalType) => set({ activeModal: modal }),
+    closeModal: () => set({ activeModal: ModalType.None }),
   },
 }));
 
-export const useModal = () => useModalStore((s) => s.isOpen);
+export const useActiveModal = (modal: ModalType) => {
+  const activeModal = useModalStore((s) => s.activeModal);
+  return modal === activeModal;
+};
+
 export const useModalActions = () => useModalStore((s) => s.actions);

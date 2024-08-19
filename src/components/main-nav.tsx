@@ -8,10 +8,18 @@ import {
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
+import { ModalType, useModalActions } from "@/store/modal";
 
 export const MainNav = () => {
   const { OmnikadoLogo } = assets;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { openModal } = useModalActions();
+
+  function open() {
+    setMobileMenuOpen(false);
+    openModal(ModalType.Cart);
+  }
+
   return (
     <header className="inset-x-0 top-0 z-50">
       <nav
@@ -47,13 +55,13 @@ export const MainNav = () => {
           >
             Gift Cards
           </a>
-          <a
-            href="#"
+          <button
+            onClick={open}
             className="text-sm font-semibold leading-6 text-primary font-primary"
           >
             <ShoppingCartIcon className="h-6 w-6 inline" />
             Cart
-          </a>
+          </button>
         </div>
       </nav>
       <Dialog
@@ -93,13 +101,13 @@ export const MainNav = () => {
                 >
                   Gift Cards
                 </a>
-                <a
-                  href="#"
+                <button
+                  onClick={open}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   <ShoppingCartIcon className="h-6 w-6 inline" />
                   Cart
-                </a>
+                </button>
               </div>
             </div>
           </div>

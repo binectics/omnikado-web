@@ -3,8 +3,9 @@ import { MainNav } from "@/components/main-nav";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import ModalContainer from "@/components/ModalContainer";
+import Modal from "@/components/ModalContainer";
 import GiftCardModal from "@/components/modals/GiftCardModal";
+import CartModal from "@/components/modals/CartModal";
 
 export const metadata: Metadata = {
   title: "Omnikado",
@@ -25,6 +26,7 @@ export default function RootLayout({
           <MainNav />
           {children}
           <GiftCardModal />
+          <CartModal />
           <Footer />
         </main>
       </body>

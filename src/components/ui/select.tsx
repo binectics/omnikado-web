@@ -1,10 +1,15 @@
 import { cn } from "@/lib/utils";
-import { CheckIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { ChevronDownIcon } from "lucide-react";
-import { ReactNode, forwardRef } from "react";
+import { forwardRef } from "react";
+import {
+  FieldValues,
+  UseControllerProps,
+  UseFormRegisterReturn,
+  useController,
+} from "react-hook-form";
 
-interface SelectProps {
+interface SelectProps extends SelectPrimitive.SelectProps {
   className?: string;
   placeholder?: string;
   options: Array<{ label: string; value: string }>;
@@ -17,7 +22,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         <SelectPrimitive.Trigger
           ref={forwardedRef}
           className={cn(
-            "inline-flex items-center font-primary justify-center rounded-md px-3 h-10 border bg-[#FFFFFF0A] border-input text-sm text-[#DBE0EB] outline-none",
+            "inline-flex items-center font-primary justify-center rounded-md px-3 h-10 border bg-[#FFFFFF0A] border-input text-sm text-[#DBE0EB] outline-none w-full",
             className
           )}
           aria-label="Region"
@@ -62,7 +67,7 @@ const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
     return (
       <SelectPrimitive.Item
         className={cn(
-          "relative flex items-center px-8 py-2 rounded-md text-sm text-gray-700 dark:text-gray-300 font-medium focus:bg-gray-100 dark:focus:bg-gray-900 font-primary",
+          "relative flex items-center px-8 py-2 rounded-md text-sm text-gray-700 font-medium focus:bg-gray-300 font-primary",
           "radix-disabled:opacity-50",
           "focus:outline-none select-none",
           className
