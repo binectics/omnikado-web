@@ -1,8 +1,8 @@
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Controller, FieldValue, FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid Email" }),

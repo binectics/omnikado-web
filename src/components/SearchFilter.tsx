@@ -1,51 +1,81 @@
 "use client";
+import { useAllCategories } from "@/hooks/useAllCategories";
 import { cn } from "@/lib/utils";
+import { useFilterActions, useFilters } from "@/store/service";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { Select } from "./ui/select";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
-const filters = ["all", "payment-cards", "gift-cards"];
+const filters = ["All", "Entertainment", "Electronics"];
 
 export default function SearchFilter() {
-  const handleFilter = (filter: string) => {
-    console.log(filter);
-  };
+  const { addFilter, removeFilter, searchServices } = useFilterActions();
+  const { data } = useAllCategories();
+  const filters = useFilters();
+
+  const categories = data.map((value) => ({
+    label: value,
+    value,
+  }));
 
   return (
-    <div className="flex md:justify-between flex-col md:flex-row gap-y-5 justify-center">
-      <div className="border border-input flex items-center gap-x-2 py-3 px-[14px] rounded-lg w-full md:max-w-[320px]">
-        <MagnifyingGlassIcon className="size-5 fill-[#667085]" />
-        <input
-          type="text"
-          name="search"
-          id="search"
-          autoComplete="search"
-          className="bg-transparent text-primary placeholder:text-placeholder w-full outline-0 text-base font-header"
-          placeholder="Search"
+    <>
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-5">
+        <div className="border border-input flex items-center gap-x-2 py-3 px-[14px] rounded-lg w-full max-w-full sm:max-w-[400px]">
+          <MagnifyingGlassIcon className="size-5 fill-[#667085]" />
+          <input
+            type="text"
+            onChange={(e) => searchServices(e.target.value)}
+            name="search"
+            id="search"
+            autoComplete="search"
+            className="bg-transparent text-primary placeholder:text-placeholder w-full outline-0 text-base font-header"
+            placeholder="Search"
+          />
+        </div>
+        <Select
+          className="max-w-[280px]"
+          placeholder="Select a Filter"
+          options={categories}
+          onValueChange={addFilter}
         />
       </div>
-      <FilterList onSelectFilter={handleFilter} filters={filters} />
-    </div>
+      {filters.length >= 1 ? (
+        <div className="flex mt-5 gap-4 items-center">
+          {filters?.map((filter) => (
+            <div
+              key={filter}
+              className="font-semibold text-sm p-2 px-3 flex items-center gap-x-1 rounded-md bg-primary"
+            >
+              {filter}
+              <XMarkIcon
+                strokeWidth={2}
+                className="size-4 cursor-pointer shrink-0"
+                onClick={() => removeFilter(filter)}
+              />
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </>
   );
 }
 
 const FilterList = ({
   filters,
+  currentFilter,
   onSelectFilter,
 }: {
   filters: string[];
+  currentFilter: string;
   onSelectFilter: (filter: string) => void;
 }) => {
-  const [currentFilter, setCurrentFilter] = useState("all");
-
   return filters ? (
     <div className="flex gap-3 md:ml-auto flex-wrap">
       {filters.map((filter) => (
         <button
           key={filter}
-          onClick={() => {
-            setCurrentFilter(filter);
-            onSelectFilter(filter);
-          }}
+          onClick={() => onSelectFilter(filter)}
           className={cn(
             "px-4 py-3 rounded-lg font-primary text-xs sm:text-sm capitalize border-input border",
             currentFilter === filter
@@ -53,7 +83,7 @@ const FilterList = ({
               : "text-primary"
           )}
         >
-          {filter.split("-").join(" ")}
+          {filter}
         </button>
       ))}
     </div>

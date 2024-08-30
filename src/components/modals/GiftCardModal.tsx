@@ -4,7 +4,7 @@ import { ModalType, useModalActions } from "@/store/modal";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import GiftCardForm from "../GiftCardForm";
+import GiftCardForm from "../forms/GiftCardForm";
 import ModalContainer from "../ModalContainer";
 
 export default function GiftCardModal() {

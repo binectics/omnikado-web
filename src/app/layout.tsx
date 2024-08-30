@@ -1,11 +1,8 @@
-import Footer from "@/components/Footer";
-import { MainNav } from "@/components/main-nav";
 import { cn } from "@/lib/utils";
+import ReactQueryClientProvider from "@/providers/QueryClientProvider";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import Modal from "@/components/ModalContainer";
-import GiftCardModal from "@/components/modals/GiftCardModal";
-import CartModal from "@/components/modals/CartModal";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Omnikado",
@@ -23,11 +20,10 @@ export default function RootLayout({
         className={cn("min-h-[100dvh] bg-background font-primary antialiased")}
       >
         <main className="mx-auto container px-8 overflow-x-hidden z-0 relative">
-          <MainNav />
-          {children}
-          <GiftCardModal />
-          <CartModal />
-          <Footer />
+          <ReactQueryClientProvider>
+            {children}
+            <Toaster />
+          </ReactQueryClientProvider>
         </main>
       </body>
     </html>

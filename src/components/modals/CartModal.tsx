@@ -3,8 +3,8 @@ import { assets } from "@/assets";
 import { cn } from "@/lib/utils";
 import { ModalType, useModalActions } from "@/store/modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Card from "../Card/Card";
-import CartForm from "../CartForm";
+import Card from "../card/Card";
+import CartForm from "../forms/CartForm";
 import ModalContainer from "../ModalContainer";
 
 const cards = [
@@ -24,6 +24,7 @@ const data = [
 
 export default function CartModal() {
   const { closeModal } = useModalActions();
+
   return (
     <ModalContainer
       className="lg:max-w-[800px] xl:max-w-[1042px]"
@@ -47,9 +48,9 @@ export default function CartModal() {
               {cards.map((card) => (
                 <Card
                   disabled
-                  className="max-h-[80px] sm:max-h-[102px] cursor-default pointer-events-none"
+                  className="cursor-default pointer-events-none"
                   key={card.alt}
-                  card={card}
+                  {...card}
                 />
               ))}
             </div>

@@ -1,11 +1,20 @@
 import { assets } from "@/assets";
-import Image from "next/image";
-import CardList from "@/components/Card/CardList";
 import BuyGiftCard from "@/components/BuyGiftCard";
 import Carousel from "@/components/Carousel";
 import SearchFilter from "@/components/SearchFilter";
+import CardList from "@/components/card/CardList";
+import getQueryClient from "@/lib/getQueryClient";
+import { prefetchAllCategories, prefetchAllServices } from "@/queries";
+import Image from "next/image";
+import { Suspense } from "react";
+import QueryErrorBoundary from "@/components/QueryErrorBoundary";
 
 export default async function Home() {
+  const queryClient = getQueryClient();
+
+  await prefetchAllServices(queryClient);
+  await prefetchAllCategories(queryClient);
+
   return (
     <section>
       <div className="lg:grid grid-cols-[1.2fr_1fr] items-center justify-center">
@@ -35,7 +44,19 @@ export default async function Home() {
         </h3>
       </div>
       <SearchFilter />
-      <CardList />
+      <QueryErrorBoundary>
+        <Suspense
+          fallback={
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 justify-items-center justify-between animate-pulse mt-16">
+              <div className="bg-gray-700 max-h-72 h-72 w-full rounded-xl"></div>
+              <div className="bg-gray-700 max-h-72 h-72 w-full rounded-xl"></div>
+              <div className="bg-gray-700 max-h-72 h-72 w-full rounded-xl"></div>
+            </div>
+          }
+        >
+          <CardList />
+        </Suspense>
+      </QueryErrorBoundary>
     </section>
   );
 }

@@ -8,13 +8,13 @@ const BuyGiftCard = () => {
       <Input
         type="name"
         placeholder="Search brands and eGift Cards"
-        className="md:w-[360px]  md:min-h-10 rounded-none text-primary placeholder:text-primary text-sm sm:text-base"
+        className="md:w-[360px] md:min-h-10 rounded-none text-sm sm:text-base"
       />
       <Button
         type="submit"
-        className="md:min-h-10 rounded-none md:min-w-[180px] font-semibold flex gap-x-2 items-center"
+        className="md:min-h-10 rounded-none md:min-w-[180px] flex gap-x-2 items-center"
       >
-        <span>Buy a Gift Card</span>
+        <span className="font-semibold">Buy a Gift Card</span>
         <ArrowUpRightIcon className="size-5 block" />
       </Button>
     </div>

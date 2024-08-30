@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { ChevronDownIcon } from "lucide-react";
 import { forwardRef } from "react";
 import {
   FieldValues,
@@ -40,13 +40,20 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             position="popper"
             side="bottom"
             sideOffset={5}
-            className="overflow-hidden bg-white rounded-md z-50 w-[var(--radix-select-trigger-width)] max-h-[var(--radix-select-content-available-height)]"
+            className="overflow-hidden bg-white rounded-md z-50 w-[var(--radix-select-trigger-width)] max-h-[200px]"
           >
+            {/* max-h-[var(--radix-select-content-available-height)] */}
+            <SelectPrimitive.ScrollUpButton className="flex items-center w-full justify-center h-[25px] bg-white cursor-default">
+              <ChevronUpIcon className="size-5" />
+            </SelectPrimitive.ScrollUpButton>
             <SelectPrimitive.Viewport>
               {options.map(({ label, value }) => (
                 <SelectItem key={label} label={label} value={value} />
               ))}
             </SelectPrimitive.Viewport>
+            <SelectPrimitive.ScrollDownButton className="flex items-center w-full justify-center h-[25px] bg-white cursor-default">
+              <ChevronDownIcon className="size-5" />
+            </SelectPrimitive.ScrollDownButton>
           </SelectPrimitive.Content>
         </SelectPrimitive.Portal>
       </SelectPrimitive.Root>
@@ -66,6 +73,7 @@ const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
   ({ className, label, value, ...props }, forwardedRef) => {
     return (
       <SelectPrimitive.Item
+        onClick={(e) => e.stopPropagation()}
         className={cn(
           "relative flex items-center px-8 py-2 rounded-md text-sm text-gray-700 font-medium focus:bg-gray-300 font-primary",
           "radix-disabled:opacity-50",
@@ -77,7 +85,7 @@ const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
         ref={forwardedRef}
       >
         <SelectPrimitive.ItemText className="capitalize">
-          {label}
+          {label.charAt(0).toUpperCase() + label.slice(1)}
         </SelectPrimitive.ItemText>
       </SelectPrimitive.Item>
     );
