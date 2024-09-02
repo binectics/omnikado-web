@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { ModalType, useModalActions } from "@/store/modal";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid Email" }),
@@ -21,7 +22,10 @@ export default function CartForm() {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
+    openModal(ModalType.GiftCard);
   };
+
+  const { openModal } = useModalActions();
 
   return (
     <form

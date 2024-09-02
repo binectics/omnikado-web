@@ -3,9 +3,9 @@ import { assets } from "@/assets";
 import { cn } from "@/lib/utils";
 import { ModalType, useModalActions } from "@/store/modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Card from "../card/Card";
 import CartForm from "../forms/CartForm";
 import ModalContainer from "../ModalContainer";
+import Card from "../card";
 
 const cards = [
   { logo: assets.WalmartGiftCard, alt: "Walmart" },

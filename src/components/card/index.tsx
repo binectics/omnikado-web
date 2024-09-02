@@ -19,7 +19,7 @@ const gradients = [
   "from-[#1571C5] to-[#1D337E]",
 ];
 
-const Card = ({ className, logo, alt, disabled }: Props) => {
+export default function Card({ className, logo, alt, disabled }: Props) {
   const { openModal } = useModalActions();
 
   const open = () => openModal(ModalType.GiftCard);
@@ -51,6 +51,4 @@ const Card = ({ className, logo, alt, disabled }: Props) => {
       </div>
     </button>
   );
-};
-
-export default Card;
+}
