@@ -2,12 +2,12 @@ import { assets } from "@/assets";
 import BuyGiftCard from "@/components/BuyGiftCard";
 import Carousel from "@/components/Carousel";
 import SearchFilter from "@/components/SearchFilter";
-import CardList from "@/components/card/CardList";
 import getQueryClient from "@/lib/getQueryClient";
 import { prefetchAllCategories, prefetchAllServices } from "@/queries";
 import Image from "next/image";
 import { Suspense } from "react";
 import QueryErrorBoundary from "@/components/QueryErrorBoundary";
+import CardList from "@/components/card/CardList";
 
 export default async function Home() {
   const queryClient = getQueryClient();
