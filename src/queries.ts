@@ -1,4 +1,4 @@
-import client from "@/lib/api";
+import client from "@/lib/axios";
 import { AxiosError } from "axios";
 import getQueryClient from "./lib/getQueryClient";
 import { Service } from "./types/service";
@@ -25,9 +25,9 @@ export async function prefetchAllCategories(queryClient: QueryClient) {
   });
 }
 
-export async function getAllServices() {
+export async function getAllServices(params?: any) {
   try {
-    const res = await client.get<Response<Service[]>>("/product");
+    const res = await client.get<Response<Service[]>>("/product", { params });
     return res.data.data;
   } catch (error) {
     throw error as AxiosError;

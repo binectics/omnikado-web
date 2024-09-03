@@ -35,14 +35,17 @@ export default function Pagination({
         <ArrowLeftIcon className="size-5 inline-block" /> Previous
       </button>
       <div className="mx-auto hidden sm:block">
-        <ul className="list-none flex items-center gap-x-2 text-primary font-xs">
+        <ul className="list-none flex items-center gap-x-2 font-xs text-primary">
           {pages.slice(0, 3).map((page) => (
             <li key={page}>
               <button
                 onClick={() => onPageChange(page)}
                 className={cn(
-                  "inline rounded-full cursor-pointer border-white text-sm size-10 font-header",
-                  currentPage === page && "border"
+                  "inline rounded-lg hover:bg-white hover:text-[#667085] transition-colors duration-200 text-primary cursor-pointer text-sm size-10 font-header",
+                  {
+                    "border border-white rounded-full hover:bg-transparent":
+                      currentPage === page,
+                  }
                 )}
               >
                 {page}
@@ -55,8 +58,11 @@ export default function Pagination({
               <button
                 onClick={() => onPageChange(page)}
                 className={cn(
-                  "inline rounded-full cursor-pointer border-white text-sm size-10 font-header",
-                  currentPage === page && "border"
+                  "inline rounded-lg hover:bg-white hover:text-[#667085] transition-colors duration-200 text-primary cursor-pointer text-sm size-10 font-header",
+                  {
+                    "border border-white rounded-full hover:bg-transparent":
+                      currentPage === page,
+                  }
                 )}
               >
                 {page}

@@ -1,34 +1,39 @@
+import useDebounce from "@/hooks/useDebounce";
 import getQueryClient from "@/lib/getQueryClient";
 import { Service } from "@/types/service";
+import { useMemo } from "react";
 import { create } from "zustand";
 
 interface ServiceStoreProps {
   searchQuery: string;
-  filters: string[];
+  filter: string;
   actions: {
-    addFilter: (filter: string) => void;
-    removeFilter: (filter: string) => void;
+    setFilter: (filter: string) => void;
     searchServices: (query: string) => void;
   };
 }
 
 const useServiceStore = create<ServiceStoreProps>((set) => ({
   searchQuery: "",
-  filters: [],
+  filter: "",
   actions: {
-    addFilter: (filter) =>
-      set((state) => ({
-        filters: state.filters.includes(filter)
-          ? state.filters
-          : [...state.filters, filter],
-      })),
-    removeFilter: (filter) =>
-      set((state) => ({ filters: state.filters.filter((f) => f !== filter) })),
+    setFilter: (filter) => set({ filter: filter === "All" ? "" : filter }),
     searchServices: (query: string) => set({ searchQuery: query }),
   },
 }));
 
-export const useFilters = () => useServiceStore((s) => s.filters);
-export const useSearchQuery = () => useServiceStore((s) => s.searchQuery);
+export const useSearchQuery = () => {
+  const searchQuery = useServiceStore((s) => s.searchQuery);
+  const filter = useServiceStore((s) => s.filter);
+  const debouncedSearchQuery = useDebounce(searchQuery);
+
+  return useMemo(
+    () => ({
+      category: filter ?? null,
+      name: debouncedSearchQuery ?? null,
+    }),
+    [debouncedSearchQuery, filter]
+  );
+};
 
 export const useFilterActions = () => useServiceStore((s) => s.actions);

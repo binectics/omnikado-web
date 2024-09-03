@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import client from "./lib/api";
+import client from "./lib/axios";
 import { Response } from "./queries";
 
 interface UserResponse {
