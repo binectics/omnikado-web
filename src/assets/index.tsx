@@ -22,4 +22,6 @@ export const assets = {
   Email: "/assets/email.svg",
   ShowPassword: "/assets/show.svg",
   HidePassword: "/assets/hide.svg",
+  Google: "/assets/google.svg",
+  Success: "/assets/success.svg",
 };

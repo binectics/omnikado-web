@@ -34,7 +34,7 @@ export default function CartModal() {
         <div className="w-full flex flex-end mb-6 sm:mb-10">
           <XMarkIcon
             onClick={() => closeModal()}
-            className="size-7 ml-auto cursor-pointer"
+            className="size-7 md:size-6 ml-auto cursor-pointer"
             strokeWidth={2}
             stroke="#fff"
           />

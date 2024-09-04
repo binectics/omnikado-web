@@ -47,7 +47,7 @@ export default function ModalContainer({ modal, className, children }: Props) {
             >
               <Dialog.Panel
                 className={cn(
-                  "relative overflow-hidden bg-[#111111] sm:my-8 sm:w-full border border-[#767676] rounded-xl mx-5 md:max-w-[702px]",
+                  "relative overflow-hidden sm:my-8 sm:w-full border border-[#767676] rounded-xl mx-5 md:max-w-[702px]",
                   className
                 )}
               >

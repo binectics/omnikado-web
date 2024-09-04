@@ -19,7 +19,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {error ? <p className="text-red-500 text-xs mt-1">{error}</p> : null}
+        {error ? (
+          <p className="text-red-500 text-xs mt-[6px]">{error}</p>
+        ) : null}
       </div>
     );
   }

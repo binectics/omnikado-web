@@ -39,7 +39,9 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
             )}
           </button>
         </div>
-        {error ? <p className="text-red-500 text-xs mt-1">{error}</p> : null}
+        {error ? (
+          <p className="text-red-500 text-xs mt-[6px]">{error}</p>
+        ) : null}
       </div>
     );
   }

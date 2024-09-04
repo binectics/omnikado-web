@@ -4,6 +4,7 @@ export enum ModalType {
   None,
   GiftCard,
   Cart,
+  Success,
 }
 interface ModalStoreProps {
   activeModal: ModalType;

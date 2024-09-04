@@ -20,7 +20,7 @@ export default function LoginPage() {
               alt="Omnikado Logo"
             />
           </a>
-          <div className="mt-14 md:mt-8 font-header text-primary">
+          <div className="mt-6 md:mt-8 font-header text-primary">
             <h1 className="font-bold text-2xl md:text-3xl mb-2 md:mb-3">
               Welcome back!
             </h1>

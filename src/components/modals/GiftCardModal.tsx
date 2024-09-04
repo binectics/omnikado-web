@@ -28,7 +28,7 @@ export default function GiftCardModal() {
           </div>
           <XMarkIcon
             onClick={() => closeModal()}
-            className="sm:size-6 size-9 ml-auto cursor-pointer"
+            className="size-7 md:size-6 ml-auto cursor-pointer"
             strokeWidth={2}
             stroke="#fff"
           />
