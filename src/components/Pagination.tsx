@@ -52,23 +52,26 @@ export default function Pagination({
               </button>
             </li>
           ))}
-          <EllipsisHorizontalIcon className="size-6 mx-auto" />
-          {pages.slice(-3).map((page) => (
-            <li key={page}>
-              <button
-                onClick={() => onPageChange(page)}
-                className={cn(
-                  "inline rounded-lg hover:bg-white hover:text-[#667085] transition-colors duration-200 text-primary cursor-pointer text-sm size-10 font-header",
-                  {
-                    "border border-white rounded-full hover:bg-transparent":
-                      currentPage === page,
-                  }
-                )}
-              >
-                {page}
-              </button>
-            </li>
-          ))}
+          {totalPages > 1 && (
+            <EllipsisHorizontalIcon className="size-6 mx-auto" />
+          )}
+          {totalPages > 1 &&
+            pages.slice(-3).map((page) => (
+              <li key={page}>
+                <button
+                  onClick={() => onPageChange(page)}
+                  className={cn(
+                    "inline rounded-lg hover:bg-white hover:text-[#667085] transition-colors duration-200 text-primary cursor-pointer text-sm size-10 font-header",
+                    {
+                      "border border-white rounded-full hover:bg-transparent":
+                        currentPage === page,
+                    }
+                  )}
+                >
+                  {page}
+                </button>
+              </li>
+            ))}
         </ul>
       </div>
       <button

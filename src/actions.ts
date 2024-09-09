@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import client from "./lib/axios";
 import { Response } from "./queries";
+import { LoginFormData } from "./components/forms/LoginForm";
 
 interface UserResponse {
   id: string;
@@ -10,7 +11,7 @@ interface UserResponse {
   access_token: string;
 }
 
-export async function loginUser(payload: { email: string; password: string }) {
+export async function loginUser(payload: LoginFormData) {
   try {
     const res = await client.post<Response<UserResponse>>(
       "/auth/login",

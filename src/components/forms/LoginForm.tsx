@@ -8,14 +8,14 @@ import Link from "next/link";
 import { z } from "zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLoginUser } from "@/hooks/useLoginUser";
+import { useLoginUser } from "@/hooks/useUser";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid Email" }),
   password: z.string().min(1, { message: "Password is required" }),
 });
 
-type LoginFormData = z.infer<typeof schema>;
+export type LoginFormData = z.infer<typeof schema>;
 
 export default function LoginForm() {
   const {

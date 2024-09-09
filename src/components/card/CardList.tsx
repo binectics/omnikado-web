@@ -27,7 +27,7 @@ export default function CardList() {
     <div className="mt-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 justify-items-center justify-between mb-14">
         {currentServices.map((product) => (
-          <Card key={product._id} logo={product.logoUrl} alt={product.name} />
+          <Card key={product._id} {...product} />
         ))}
       </div>
       {currentServices && (

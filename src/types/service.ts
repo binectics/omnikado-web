@@ -4,9 +4,9 @@ interface Price {
   currencyCode: string;
 }
 
-interface Product {
+export interface Product {
   price: Price;
-  id: number;
+  id: string;
   name: string;
   minFaceValue: number;
   maxFaceValue: number;

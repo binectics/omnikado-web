@@ -22,18 +22,33 @@ const useServiceStore = create<ServiceStoreProps>((set) => ({
   },
 }));
 
+type SearchQueryResult = {
+  category?: string;
+  name?: string;
+} | null;
+
 export const useSearchQuery = () => {
   const searchQuery = useServiceStore((s) => s.searchQuery);
   const filter = useServiceStore((s) => s.filter);
   const debouncedSearchQuery = useDebounce(searchQuery);
 
-  return useMemo(
-    () => ({
-      category: filter ?? null,
-      name: debouncedSearchQuery ?? null,
-    }),
-    [debouncedSearchQuery, filter]
-  );
+  return useMemo(() => {
+    if (!debouncedSearchQuery && !filter) {
+      return null;
+    }
+
+    const result: SearchQueryResult = {};
+
+    if (filter) {
+      result.category = filter;
+    }
+
+    if (debouncedSearchQuery) {
+      result.name = debouncedSearchQuery;
+    }
+
+    return Object.keys(result).length > 0 ? result : null;
+  }, [debouncedSearchQuery, filter]);
 };
 
 export const useFilterActions = () => useServiceStore((s) => s.actions);

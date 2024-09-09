@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface AuthStoreProps {
-  authToken: string;
+  authToken: string | null;
   actions: {
     setAuth: (token: string) => void;
   };

@@ -9,7 +9,9 @@ export const useLoginUser = () => {
     mutationFn: loginUser,
     onSuccess: (res) => {
       toast.success(res.message);
-      setAuth(res.data?.access_token ?? "");
+      setAuth(res.data?.access_token);
     },
   });
 };
+
+export const useSignUpUser = () => {};

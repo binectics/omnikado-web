@@ -23,20 +23,22 @@ export default function ReactQueryClientProvider({
   children: React.ReactNode;
 }) {
   const [client] = useState(
-    new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-          staleTime: 10 * 1000,
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            staleTime: 10 * 1000,
+            gcTime: 5 * 60 * 1000,
+          },
         },
-      },
-      mutationCache: new MutationCache({
-        onError: ({ response }) => {
-          const error = response?.data.error[0] ?? "Something Went Wrong";
-          toast.error(error);
-        },
-      }),
-    })
+        mutationCache: new MutationCache({
+          onError: ({ response }) => {
+            const error = response?.data.error[0] ?? "Something Went Wrong";
+            toast.error(error);
+          },
+        }),
+      })
   );
 
   return (

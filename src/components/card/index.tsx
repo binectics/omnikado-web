@@ -1,13 +1,12 @@
 import { assets } from "@/assets";
 import { cn } from "@/lib/utils";
 import { useModalActions, ModalType } from "@/store/modal";
+import { Service } from "@/types/service";
 import Image from "next/image";
 import { useMemo } from "react";
 
-interface Props {
+interface CardProps extends Service {
   className?: string;
-  logo: string;
-  alt: string;
   disabled?: boolean;
 }
 
@@ -19,10 +18,10 @@ const gradients = [
   "from-[#1571C5] to-[#1D337E]",
 ];
 
-export default function Card({ className, logo, alt, disabled }: Props) {
+export default function Card({ className, disabled, ...service }: CardProps) {
   const { openModal } = useModalActions();
 
-  const open = () => openModal(ModalType.GiftCard);
+  const open = () => openModal(ModalType.GiftCard, service);
 
   const gradient = useMemo(() => gradients[Math.floor(Math.random() * 5)], []);
 
@@ -41,8 +40,8 @@ export default function Card({ className, logo, alt, disabled }: Props) {
           $60
         </p>
         <Image
-          src={logo}
-          alt={alt}
+          src={service.logoUrl}
+          alt={service.name}
           width={100}
           height={100}
           priority={true}

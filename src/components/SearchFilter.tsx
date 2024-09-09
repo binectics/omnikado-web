@@ -2,16 +2,13 @@
 import { useAllCategories } from "@/hooks/useAllCategories";
 import { useFilterActions } from "@/store/service";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { Select } from "./ui/select";
+import { Select, SelectItem } from "./ui/select";
 
 export default function SearchFilter() {
   const { setFilter, searchServices } = useFilterActions();
   const { data } = useAllCategories();
 
-  const categories = ["All", ...data].map((value) => ({
-    label: value,
-    value,
-  }));
+  const categories = ["All", ...data];
 
   return (
     <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-5">
@@ -30,9 +27,14 @@ export default function SearchFilter() {
       <Select
         className="max-w-[280px]"
         placeholder="Select a Filter"
-        options={categories}
         onValueChange={setFilter}
-      />
+      >
+        {categories.map((category) => (
+          <SelectItem key={category} value={category}>
+            {category}
+          </SelectItem>
+        ))}
+      </Select>
     </div>
   );
 }

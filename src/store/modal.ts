@@ -1,3 +1,4 @@
+import { Service } from "@/types/service";
 import { create } from "zustand";
 
 export enum ModalType {
@@ -8,17 +9,22 @@ export enum ModalType {
 }
 interface ModalStoreProps {
   activeModal: ModalType;
+  modalData: Service | null;
   actions: {
-    openModal: (modal: ModalType) => void;
+    openModal: (modal: ModalType, payload?: any) => void;
     closeModal: () => void;
   };
 }
 
 const useModalStore = create<ModalStoreProps>((set) => ({
   activeModal: ModalType.None,
+  modalData: null,
   actions: {
-    openModal: (modal: ModalType) => set({ activeModal: modal }),
-    closeModal: () => set({ activeModal: ModalType.None }),
+    openModal: (modal: ModalType, payload?: any) =>
+      set({ activeModal: modal, modalData: payload ?? null }),
+    closeModal: () => {
+      set({ activeModal: ModalType.None });
+    },
   },
 }));
 
@@ -28,3 +34,5 @@ export const useActiveModal = (modal: ModalType) => {
 };
 
 export const useModalActions = () => useModalStore((s) => s.actions);
+
+export const useModalData = () => useModalStore((s) => s.modalData);

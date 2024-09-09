@@ -1,56 +1,79 @@
 "use client";
-import { assets } from "@/assets";
-import { ModalType, useModalActions } from "@/store/modal";
+import { ModalType, useModalActions, useModalData } from "@/store/modal";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import GiftCardForm from "../forms/GiftCardForm";
 import ModalContainer from "../ModalContainer";
+import GiftCardForm from "../forms/GiftCardForm";
 
 export default function GiftCardModal() {
   const { closeModal } = useModalActions();
 
+  const service = useModalData();
+
   return (
     <ModalContainer modal={ModalType.GiftCard}>
-      <div className="bg-[#111111] px-4 pb-4 pt-5 sm:p-6 sm:pb-4 font-primary text-left">
-        <header className="flex items-center mb-5">
-          <div className="flex flex-col gap-x-5 gap-y-1 sm:flex-row sm:items-center">
-            <Image
-              src={assets.WalmartLogo}
-              alt={"Walmart"}
-              width={100}
-              height={100}
-              className="max-h-12 w-auto object-contain"
+      {service && (
+        <div className="bg-[#111111] px-4 pb-4 pt-5 sm:p-6 sm:pb-4 font-primary text-left">
+          <header className="flex items-center mb-5">
+            <div className="flex flex-col gap-x-5 gap-y-1 sm:flex-row sm:items-center">
+              <Image
+                src={service.logoUrl}
+                alt={"Walmart"}
+                width={100}
+                height={100}
+                className="max-h-12 w-auto object-contain"
+              />
+              <span className="inline-block text-xs font-primary text-primary h-fit mt-auto">
+                Available region: France, USA, Canada
+              </span>
+            </div>
+            <XMarkIcon
+              onClick={() => closeModal()}
+              className="size-7 md:size-6 ml-auto cursor-pointer"
+              strokeWidth={2}
+              stroke="#fff"
             />
-            <span className="inline-block text-xs font-primary text-primary h-fit mt-auto">
-              Available region: France, USA, Canada
-            </span>
-          </div>
-          <XMarkIcon
-            onClick={() => closeModal()}
-            className="size-7 md:size-6 ml-auto cursor-pointer"
-            strokeWidth={2}
-            stroke="#fff"
+          </header>
+          <Dialog.Title
+            as="h3"
+            className="font-semibold text-lg text-white capitalize"
+          >
+            {`${service.name} Cards`}
+          </Dialog.Title>
+          {service.description && (
+            <div className="mt-1">
+              <span className="font-primary text-primary text-sm font-semibold border-b border-primary">
+                Description
+              </span>
+              <p className="text-sm text-white mt-1">{service.description}</p>
+            </div>
+          )}
+          {service.redemptionInstructions && (
+            <div className="mt-1">
+              <span className="font-primary text-primary text-sm font-semibold border-b border-primary">
+                Redemption Instructions
+              </span>
+              <p className="text-sm text-white mt-1">
+                {service.redemptionInstructions}
+              </p>
+            </div>
+          )}
+          {service.terms && (
+            <div className="mt-1">
+              <span className="font-primary text-primary text-sm font-semibold border-b border-primary">
+                Terms & Conditions
+              </span>
+              <p className="text-sm text-white mt-1">{service.terms}</p>
+            </div>
+          )}
+          <GiftCardForm
+            countryCode={service.countryCode}
+            currencyCode={service.currencyCode}
+            products={service.products}
           />
-        </header>
-        <Dialog.Title as="h3" className="font-semibold text-lg text-white">
-          Walmart Multi-region cards
-        </Dialog.Title>
-        <p className="text-sm text-white mt-2">
-          Like the creators who use their gear, adidas is committed to their
-          craft. They believe that sport has the power to change lives. adidas
-          creates innovative products, apparel and footwear for athletes and
-          designs sport-centric streetwear for everyone. Their goal is to
-          promote creativity and encourage anyone to harness the power of sport
-          in their life. Use this gift card at adidas retail locations or online
-          at adidas.com.Online Redemption: Enter your full 19 digit card number
-          & 4 digit PIN in the gift card field of the payment screen. Click
-          Apply In-store Redemption: Bring your Gift Card number and PIN to any
-          adidas Sport Performance, adidas Originals, or adidas Outlet store.
-          ...See more
-        </p>
-        <GiftCardForm />
-      </div>
+        </div>
+      )}
     </ModalContainer>
   );
 }
