@@ -47,6 +47,18 @@ export default function CartModal() {
             <div className="flex flex-wrap gap-4 max-h-[272px] sm:max-h-[338px] overflow-y-auto custom-scroll">
               {cards.map((card) => (
                 <Card
+                  _id={""}
+                  name={""}
+                  countryCode={""}
+                  currencyCode={""}
+                  description={""}
+                  disclaimer={null}
+                  redemptionInstructions={""}
+                  terms={""}
+                  logoUrl={""}
+                  modifiedDate={""}
+                  products={[]}
+                  categories={[]}
                   disabled
                   className="cursor-default pointer-events-none"
                   key={card.alt}
