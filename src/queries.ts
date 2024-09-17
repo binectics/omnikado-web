@@ -1,15 +1,9 @@
 import client from "@/lib/axios";
-import { AxiosError } from "axios";
-import getQueryClient from "./lib/getQueryClient";
-import { Service } from "./types/service";
 import { QueryClient } from "@tanstack/react-query";
-
-export interface Response<T> {
-  data: T;
-  error: string[];
-  message: string;
-  statusCode: number;
-}
+import { AxiosError } from "axios";
+import { Service } from "./types/service";
+import { IResponse } from "./types/auth";
+import { Cart } from "./types/cart";
 
 export async function prefetchAllServices(queryClient: QueryClient) {
   await queryClient.prefetchQuery({
@@ -27,7 +21,7 @@ export async function prefetchAllCategories(queryClient: QueryClient) {
 
 export async function getAllServices(params?: any) {
   try {
-    const res = await client.get<Response<Service[]>>("/product", { params });
+    const res = await client.get<IResponse<Service[]>>("/product", { params });
     return res.data.data;
   } catch (error) {
     throw error as AxiosError;
@@ -36,7 +30,18 @@ export async function getAllServices(params?: any) {
 
 export async function getAllCategories() {
   try {
-    const res = await client.get<Response<string[]>>("/product/category");
+    const res = await client.get<IResponse<string[]>>("/product/category");
+    return res.data.data;
+  } catch (error) {
+    throw error as AxiosError;
+  }
+}
+
+export async function getCartById(params?: any) {
+  try {
+    const res = await client.get<IResponse<Cart>>("/cart", {
+      params,
+    });
     return res.data.data;
   } catch (error) {
     throw error as AxiosError;

@@ -8,7 +8,7 @@ export default function SearchFilter() {
   const { setFilter, searchServices } = useFilterActions();
   const { data } = useAllCategories();
 
-  const categories = ["All", ...data];
+  const categories = data ? ["All", ...data] : ["All"];
 
   return (
     <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-5">
@@ -16,7 +16,7 @@ export default function SearchFilter() {
         <MagnifyingGlassIcon className="size-5 fill-[#667085]" />
         <input
           type="text"
-          onChange={(e) => searchServices(e.target.value)}
+          onChange={(e) => searchServices(e.target.value.toLowerCase())}
           name="search"
           id="search"
           autoComplete="search"

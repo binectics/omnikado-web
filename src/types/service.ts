@@ -30,7 +30,6 @@ export interface Service {
   redemptionInstructions: string;
   terms: string;
   logoUrl: string;
-  modifiedDate: string;
   products: Product[];
   categories: Category[];
 }

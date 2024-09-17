@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { ModalType, useActiveModal, useModalActions } from "@/store/modal";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
 
 interface Props {
   className?: string;
@@ -52,6 +53,7 @@ export default function ModalContainer({ modal, className, children }: Props) {
                 )}
               >
                 {children}
+                <ToastContainer containerId="modal" />
               </Dialog.Panel>
             </Transition.Child>
           </div>

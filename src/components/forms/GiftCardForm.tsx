@@ -1,15 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem } from "@/components/ui/select";
+import { useAddToCart } from "@/hooks/useAddToCart";
+import { useCreateCart } from "@/hooks/useCreateCart";
+import { ModalType, useModalActions } from "@/store/modal";
 import { Product } from "@/types/service";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { z } from "zod";
 
 interface Props {
   countryCode: string;
-  currencyCode: string;
   products: Product[];
 }
 
@@ -26,12 +29,12 @@ const createSchema = (minValue: number, maxValue: number) =>
 
 type FormData = z.infer<ReturnType<typeof createSchema>>;
 
-export default function GiftCardForm({
-  countryCode,
-  currencyCode,
-  products,
-}: Props) {
+export default function GiftCardForm({ countryCode, products }: Props) {
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
+
+  const { openModal } = useModalActions();
+
+  const { mutate } = useCreateCart();
 
   const [schema, setSchema] = useState(
     createSchema(selectedProduct.minFaceValue, selectedProduct.maxFaceValue)
@@ -41,7 +44,7 @@ export default function GiftCardForm({
     register,
     control,
     handleSubmit,
-    trigger,
+    getValues,
     formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onChange",
@@ -60,14 +63,26 @@ export default function GiftCardForm({
 
   const onSubmit = (data: FormData) => {
     const result = {
+      sourceCurrency: selectedProduct.price.currencyCode,
+      sourceAmount: data.price ?? selectedProduct.maxFaceValue,
       productId: selectedProduct.id,
-      productName: selectedProduct.name,
-      currency: currencyCode,
       quantity: data.quantity,
-      productSourcePlatform: "ozchest",
-      price: data.price ?? selectedProduct.maxFaceValue,
     };
     console.log(result);
+    openModal(ModalType.Cart);
+  };
+
+  const { mutate: addItemToCart } = useAddToCart();
+
+  const addToCart = () => {
+    const newItem = {
+      sourceCurrency: selectedProduct.price.currencyCode,
+      sourceAmount: getValues("price") ?? selectedProduct.maxFaceValue,
+      productId: selectedProduct.id,
+      quantity: getValues("quantity"),
+    };
+    console.log({ cartId: "11", newItem });
+    addItemToCart({ cartId: "11", newItem });
   };
 
   return (
@@ -126,7 +141,7 @@ export default function GiftCardForm({
             className="block text-sm font-medium text-primary mb-1"
           >
             Amount (
-            {`${selectedProduct.minFaceValue} - ${selectedProduct.maxFaceValue} ${currencyCode}`}
+            {`${selectedProduct.minFaceValue} - ${selectedProduct.maxFaceValue} ${selectedProduct.price.currencyCode}`}
             )
           </label>
           <Input
@@ -143,7 +158,13 @@ export default function GiftCardForm({
       )}
 
       <div className="flex gap-x-3 justify-between">
-        <Button type="button" variant="alternate" className="w-full">
+        <Button
+          type="button"
+          name="cart"
+          onClick={addToCart}
+          variant="alternate"
+          className="w-full"
+        >
           Add To Cart
         </Button>
         <Button disabled={!isValid} type="submit" className="w-full">
@@ -153,3 +174,18 @@ export default function GiftCardForm({
     </form>
   );
 }
+
+// const promise = mutateAsync({
+//   cartId: "11",
+//   payload: {
+//     cartitems: [
+//       {
+//         sourceCurrency: selectedProduct.price.currencyCode,
+//         sourceAmount:
+//           getValues("price").price ?? selectedProduct.maxFaceValue,
+//         productId: selectedProduct.id,
+//         quantity: getValues("quantity").quantity,
+//       },
+//     ],
+//   },
+// });

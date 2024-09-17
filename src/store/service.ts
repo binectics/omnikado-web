@@ -1,8 +1,6 @@
-import useDebounce from "@/hooks/useDebounce";
-import getQueryClient from "@/lib/getQueryClient";
-import { Service } from "@/types/service";
 import { useMemo } from "react";
 import { create } from "zustand";
+import { useDebounceValue } from "usehooks-ts";
 
 interface ServiceStoreProps {
   searchQuery: string;
@@ -30,7 +28,14 @@ type SearchQueryResult = {
 export const useSearchQuery = () => {
   const searchQuery = useServiceStore((s) => s.searchQuery);
   const filter = useServiceStore((s) => s.filter);
-  const debouncedSearchQuery = useDebounce(searchQuery);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useDebounceValue(
+    searchQuery,
+    500
+  );
+
+  useMemo(() => {
+    setDebouncedSearchQuery(searchQuery);
+  }, [searchQuery, setDebouncedSearchQuery]);
 
   return useMemo(() => {
     if (!debouncedSearchQuery && !filter) {

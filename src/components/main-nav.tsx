@@ -1,14 +1,14 @@
 "use client";
-import Image from "next/image";
-import { useState } from "react";
 import { assets } from "@/assets";
+import { ModalType, useModalActions } from "@/store/modal";
 import { Dialog } from "@headlessui/react";
 import {
   Bars3Icon,
-  XMarkIcon,
   ShoppingCartIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { ModalType, useModalActions } from "@/store/modal";
+import Image from "next/image";
+import { useState } from "react";
 
 export const MainNav = () => {
   const { OmnikadoLogo } = assets;

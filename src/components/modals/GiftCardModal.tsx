@@ -8,7 +8,6 @@ import GiftCardForm from "../forms/GiftCardForm";
 
 export default function GiftCardModal() {
   const { closeModal } = useModalActions();
-
   const service = useModalData();
 
   return (
@@ -69,7 +68,6 @@ export default function GiftCardModal() {
           )}
           <GiftCardForm
             countryCode={service.countryCode}
-            currencyCode={service.currencyCode}
             products={service.products}
           />
         </div>

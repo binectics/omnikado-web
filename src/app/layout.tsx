@@ -1,11 +1,10 @@
-import CartModal from "@/components/modals/CartModal";
-import GiftCardModal from "@/components/modals/GiftCardModal";
 import SuccessModal from "@/components/modals/SuccessModal";
 import { cn } from "@/lib/utils";
 import ReactQueryClientProvider from "@/providers/QueryClientProvider";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Omnikado",
@@ -25,11 +24,9 @@ export default function RootLayout({
         <main className="mx-auto container px-8 overflow-x-hidden z-0 relative">
           <ReactQueryClientProvider>
             {children}
-            <GiftCardModal />
-            <CartModal />
             <SuccessModal />
-            <Toaster />
           </ReactQueryClientProvider>
+          <ToastContainer containerId="normal" />
         </main>
       </body>
     </html>

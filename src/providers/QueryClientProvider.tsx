@@ -1,5 +1,5 @@
 "use client";
-import { Response } from "@/queries";
+import { IResponse } from "@/types/auth";
 import {
   MutationCache,
   QueryClient,
@@ -9,11 +9,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import { AxiosError } from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 declare module "@tanstack/react-query" {
   interface Register {
-    defaultError: AxiosError<Response<null>>;
+    defaultError: AxiosError<IResponse>;
   }
 }
 
@@ -34,6 +34,9 @@ export default function ReactQueryClientProvider({
         },
         mutationCache: new MutationCache({
           onError: ({ response }) => {
+            if (!response) {
+              toast.error("Network Error");
+            }
             const error = response?.data.error[0] ?? "Something Went Wrong";
             toast.error(error);
           },

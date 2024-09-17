@@ -1,38 +1,24 @@
-import { assets } from "@/assets";
-import { cn } from "@/lib/utils";
-import { useModalActions, ModalType } from "@/store/modal";
+import { cn, randomGradient } from "@/lib/utils";
+import { ModalType, useModalActions } from "@/store/modal";
 import { Service } from "@/types/service";
 import Image from "next/image";
 import { useMemo } from "react";
 
-interface CardProps extends Service {
-  className?: string;
-  disabled?: boolean;
-}
-
-const gradients = [
-  "from-[#2E15C5] to-[#481D7E]",
-  "from-[#B715C5] to-[#361D7E]",
-  "from-[#15C527] to-[#1D7E5B]",
-  "from-[#C5157F] to-[#7E1D40]",
-  "from-[#1571C5] to-[#1D337E]",
-];
-
-export default function Card({ className, disabled, ...service }: CardProps) {
+export default function Card(service: Service) {
   const { openModal } = useModalActions();
 
-  const open = () => openModal(ModalType.GiftCard, service);
+  const open = () => {
+    openModal(ModalType.GiftCard, service);
+  };
 
-  const gradient = useMemo(() => gradients[Math.floor(Math.random() * 5)], []);
+  const gradient = useMemo(() => randomGradient(), []);
 
   return (
     <button
       className={cn(
-        "max-w-[380px] w-full h-[273px] rounded-2xl relative overflow-hidden bg-gradient-to-r p-7",
-        gradient,
-        className
+        "w-full rounded-2xl relative overflow-hidden bg-gradient-to-r p-7 max-w-[380px] h-[273px]",
+        gradient
       )}
-      disabled={disabled}
       onClick={open}
     >
       <div className="relative h-full">
