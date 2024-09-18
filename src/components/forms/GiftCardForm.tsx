@@ -8,7 +8,6 @@ import { Product } from "@/types/service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { z } from "zod";
 
 interface Props {
@@ -32,9 +31,7 @@ type FormData = z.infer<ReturnType<typeof createSchema>>;
 export default function GiftCardForm({ countryCode, products }: Props) {
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
 
-  const { openModal } = useModalActions();
-
-  const { mutate } = useCreateCart();
+  const { openModal, closeModal } = useModalActions();
 
   const [schema, setSchema] = useState(
     createSchema(selectedProduct.minFaceValue, selectedProduct.maxFaceValue)
@@ -62,17 +59,24 @@ export default function GiftCardForm({ countryCode, products }: Props) {
   }, [selectedProduct]);
 
   const onSubmit = (data: FormData) => {
-    const result = {
+    const newItem = {
       sourceCurrency: selectedProduct.price.currencyCode,
       sourceAmount: data.price ?? selectedProduct.maxFaceValue,
       productId: selectedProduct.id,
       quantity: data.quantity,
     };
-    console.log(result);
-    openModal(ModalType.Cart);
+    createCart(undefined, {
+      onSuccess: (cartId) =>
+        addItemToCart(
+          { cartId, newItem },
+          { onSuccess: () => openModal(ModalType.Cart) }
+        ),
+    });
   };
 
-  const { mutate: addItemToCart } = useAddToCart();
+  const { mutate: addItemToCart, isPending } = useAddToCart();
+
+  const { mutate: createCart } = useCreateCart();
 
   const addToCart = () => {
     const newItem = {
@@ -81,8 +85,16 @@ export default function GiftCardForm({ countryCode, products }: Props) {
       productId: selectedProduct.id,
       quantity: getValues("quantity"),
     };
-    console.log({ cartId: "11", newItem });
-    addItemToCart({ cartId: "11", newItem });
+
+    createCart(undefined, {
+      onSuccess: (cartId) =>
+        addItemToCart(
+          { cartId, newItem },
+          {
+            onSuccess: () => closeModal(),
+          }
+        ),
+    });
   };
 
   return (
@@ -161,6 +173,7 @@ export default function GiftCardForm({ countryCode, products }: Props) {
         <Button
           type="button"
           name="cart"
+          disabled={isPending}
           onClick={addToCart}
           variant="alternate"
           className="w-full"

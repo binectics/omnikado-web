@@ -1,5 +1,6 @@
 "use client";
 import { assets } from "@/assets";
+import { useCreateCart } from "@/hooks/useCreateCart";
 import { ModalType, useModalActions } from "@/store/modal";
 import { Dialog } from "@headlessui/react";
 import {
@@ -14,10 +15,15 @@ export const MainNav = () => {
   const { OmnikadoLogo } = assets;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { openModal } = useModalActions();
+ 
+  const { mutate } = useCreateCart();
 
   function open() {
     setMobileMenuOpen(false);
-    openModal(ModalType.Cart);
+
+    mutate(undefined, {
+      onSuccess: () => openModal(ModalType.Cart),
+    });
   }
 
   return (

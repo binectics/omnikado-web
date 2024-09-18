@@ -1,10 +1,11 @@
 "use client";
 import { ModalType, useModalActions, useModalData } from "@/store/modal";
-import { Dialog } from "@headlessui/react";
+import { Dialog, DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import ModalContainer from "../ModalContainer";
 import GiftCardForm from "../forms/GiftCardForm";
+import { Service } from "@/types/service";
 
 export default function GiftCardModal() {
   const { closeModal } = useModalActions();
@@ -34,12 +35,12 @@ export default function GiftCardModal() {
               stroke="#fff"
             />
           </header>
-          <Dialog.Title
+          <DialogTitle
             as="h3"
             className="font-semibold text-lg text-white capitalize"
           >
             {`${service.name} Cards`}
-          </Dialog.Title>
+          </DialogTitle>
           {service.description && (
             <div className="mt-1">
               <span className="font-primary text-primary text-sm font-semibold border-b border-primary">

@@ -1,4 +1,5 @@
 import SuccessModal from "@/components/modals/SuccessModal";
+import { toastConfig } from "@/lib/toast";
 import { cn } from "@/lib/utils";
 import ReactQueryClientProvider from "@/providers/QueryClientProvider";
 import "@/styles/globals.css";
@@ -26,7 +27,7 @@ export default function RootLayout({
             {children}
             <SuccessModal />
           </ReactQueryClientProvider>
-          <ToastContainer containerId="normal" />
+          <ToastContainer {...toastConfig} containerId="normal" />
         </main>
       </body>
     </html>

@@ -5,7 +5,7 @@ import axios, { AxiosError } from "axios";
 
 export async function createCart(payload: any) {
   try {
-    const res = await client.post("/cart", payload);
+    const res = await client.post<IResponse<Cart>>("/cart", payload);
     return res.data;
   } catch (error) {
     throw error as AxiosError;

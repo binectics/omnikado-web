@@ -1,13 +1,7 @@
 import { cn } from "@/lib/utils";
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { forwardRef } from "react";
-import {
-  FieldValues,
-  UseControllerProps,
-  UseFormRegisterReturn,
-  useController,
-} from "react-hook-form";
 
 interface SelectProps extends SelectPrimitive.SelectProps {
   className?: string;
@@ -39,7 +33,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             position="popper"
             side="bottom"
             sideOffset={5}
-            className="overflow-hidden bg-white rounded-md z-50 w-[var(--radix-select-trigger-width)] max-h-[200px]"
+            className="overflow-hidden bg-white rounded-md z-50 w-[var(--radix-select-trigger-width)] max-h-[var(--radix-select-content-available-height)]"
           >
             {/* max-h-[var(--radix-select-content-available-height)] */}
             <SelectPrimitive.ScrollUpButton className="flex items-center w-full justify-center h-[25px] bg-white cursor-default">
@@ -66,7 +60,7 @@ export const SelectItem = forwardRef<
     <SelectPrimitive.Item
       onClick={(e) => e.stopPropagation()}
       className={cn(
-        "relative flex items-center px-8 py-2 rounded-md text-sm text-gray-700 font-medium focus:bg-gray-300 font-primary",
+        "relative flex items-center px-8 py-2 text-sm text-primary font-medium bg-black font-primary border-none",
         "radix-disabled:opacity-50",
         "focus:outline-none select-none",
         className

@@ -1,9 +1,11 @@
-import usePaystack from "@/hooks/usePaystack";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import usePaystack from "@/hooks/usePaystack";
+import { HookConfig } from "react-paystack/dist/types";
+import { useModalActions } from "@/store/modal";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid Email" }),
@@ -11,11 +13,28 @@ const schema = z.object({
 
 export type FormData = z.infer<typeof schema>;
 
+const config: HookConfig = {
+  publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY!,
+};
+
 interface Props {
   totalAmount: number;
 }
 
 export default function CartForm({ totalAmount }: Props) {
+  const { closeModal } = useModalActions();
+
+  const onSuccess = (reference: string) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+    closeModal();
+  };
+
+  const onClose = () => {
+    console.log("Paystack Closed");
+    closeModal();
+  };
+
   const {
     register,
     handleSubmit,
@@ -24,8 +43,18 @@ export default function CartForm({ totalAmount }: Props) {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const initTransaction = usePaystack(config);
+
+  const onSubmit = ({ email }: FormData) => {
+    initTransaction({
+      config: {
+        amount: totalAmount * 100,
+        email: email,
+        reference: new Date().getTime().toString(),
+      },
+      onSuccess,
+      onClose,
+    });
   };
 
   return (

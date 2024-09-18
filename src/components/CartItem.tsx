@@ -1,17 +1,19 @@
+import { useRemoveFromCart } from "@/hooks/useRemoveFromCart";
 import { cn, randomGradient } from "@/lib/utils";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useMemo } from "react";
 
 interface Props {
+  cartId: string;
   id: string;
   logoUrl: string;
   amount: number;
-  onRemoveItem: (id: string) => void;
 }
 
-export default function CartItem({ id, logoUrl, amount, onRemoveItem }: Props) {
+export default function CartItem({ id, cartId, logoUrl, amount }: Props) {
   const gradient = useMemo(() => randomGradient(), []);
+  const { mutate: removeItem, isPending } = useRemoveFromCart();
   return (
     <div
       className={cn(
@@ -19,12 +21,16 @@ export default function CartItem({ id, logoUrl, amount, onRemoveItem }: Props) {
         gradient
       )}
     >
-      <XMarkIcon
-        onClick={() => onRemoveItem(id)}
-        className="size-6 cursor-pointer absolute top-3 right-3"
-        strokeWidth={2}
-        stroke="#fff"
-      />
+      <button
+        onClick={() => removeItem({ cartId, itemId: id })}
+        disabled={isPending}
+      >
+        <XMarkIcon
+          className="size-6 cursor-pointer absolute top-3 right-3"
+          strokeWidth={2}
+          stroke="#fff"
+        />
+      </button>
       <div className="relative h-full overflow-hidden">
         <p className="font-header text-left text-primary font-bold text-[28px] tracking-[-2%] z-50 text-wrap">
           {`$${Number(amount).toLocaleString()}`}

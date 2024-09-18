@@ -2,20 +2,15 @@
 import { useCart } from "@/hooks/useCart";
 import { ModalType, useModalActions } from "@/store/modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useMemo } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import ModalContainer from "../ModalContainer";
-import Card from "../card";
-import CartForm from "../forms/CartForm";
 import CartItem from "../CartItem";
-import { useRemoveFromCart } from "@/hooks/useRemoveFromCart";
+import ModalContainer from "../ModalContainer";
+import CartForm from "../forms/CartForm";
 
 export default function CartModal() {
   const { closeModal } = useModalActions();
   const [sessionId] = useLocalStorage<string | null>("sessionId", null);
   const { data: cart } = useCart(sessionId);
-
-  const { mutate: removeItem } = useRemoveFromCart();
 
   const totalamount = cart?.cartItems
     ? cart.cartItems
@@ -45,13 +40,11 @@ export default function CartModal() {
             <div className="grid sm:grid-cols-2 gap-6 overflow-y-auto custom-scroll max-h-[300px] pr-3">
               {cart?.cartItems.map((cartItem) => (
                 <CartItem
+                  cartId={cart.id}
                   key={cartItem.id}
                   logoUrl="https://bamboo-assets.s3.amazonaws.com/app-images/brand-images/2256/logo"
                   id={cartItem.id}
                   amount={cartItem.sourceAmount}
-                  onRemoveItem={(id) =>
-                    removeItem({ cartId: cart.id, itemId: id })
-                  }
                 />
               ))}
             </div>
