@@ -19,4 +19,9 @@ export const assets = {
   VanillaGiftCard: "/assets/gc-vanilla.svg",
   GooglePlayGiftCard: "/assets/gc-gplay.svg",
   EbayGiftCard: "/assets/gc-ebay.svg",
+  Email: "/assets/email.svg",
+  ShowPassword: "/assets/show.svg",
+  HidePassword: "/assets/hide.svg",
+  Google: "/assets/google.svg",
+  Success: "/assets/success.svg",
 };
