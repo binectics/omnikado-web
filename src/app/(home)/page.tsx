@@ -1,13 +1,14 @@
 import { assets } from "@/assets";
 import BuyGiftCard from "@/components/BuyGiftCard";
 import Carousel from "@/components/Carousel";
+import QueryErrorBoundary from "@/components/QueryErrorBoundary";
 import SearchFilter from "@/components/SearchFilter";
+import CardList from "@/components/card/CardList";
+import { Skeleton } from "@/components/ui/skeleton";
 import getQueryClient from "@/lib/getQueryClient";
 import { prefetchAllCategories, prefetchAllServices } from "@/queries";
 import Image from "next/image";
 import { Suspense } from "react";
-import QueryErrorBoundary from "@/components/QueryErrorBoundary";
-import CardList from "@/components/card/CardList";
 
 export default async function Home() {
   const queryClient = getQueryClient();
@@ -47,10 +48,10 @@ export default async function Home() {
       <QueryErrorBoundary>
         <Suspense
           fallback={
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 justify-items-center justify-between animate-pulse mt-16">
-              <div className="bg-gray-700 max-h-72 h-72 w-full rounded-xl"></div>
-              <div className="bg-gray-700 max-h-72 h-72 w-full rounded-xl"></div>
-              <div className="bg-gray-700 max-h-72 h-72 w-full rounded-xl"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 justify-items-center justify-between mt-16">
+              <Skeleton className="bg-[#1e1e1e] max-h-72 h-72 w-full rounded-xl" />
+              <Skeleton className="bg-[#1e1e1e] max-h-72 h-72 w-full rounded-xl" />
+              <Skeleton className="bg-[#1e1e1e] max-h-72 h-72 w-full rounded-xl" />
             </div>
           }
         >

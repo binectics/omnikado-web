@@ -1,11 +1,11 @@
+import usePaystack from "@/hooks/usePaystack";
+import { useModalActions } from "@/store/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { HookConfig } from "react-paystack/dist/types";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import usePaystack from "@/hooks/usePaystack";
-import { HookConfig } from "react-paystack/dist/types";
-import { useModalActions } from "@/store/modal";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid Email" }),
@@ -25,14 +25,12 @@ export default function CartForm({ totalAmount }: Props) {
   const { closeModal } = useModalActions();
 
   const onSuccess = (reference: string) => {
-    // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
     closeModal();
   };
 
   const onClose = () => {
     console.log("Paystack Closed");
-    closeModal();
   };
 
   const {

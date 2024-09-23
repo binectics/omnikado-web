@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useAddToCart } from "@/hooks/useAddToCart";
-import { useCreateCart } from "@/hooks/useCreateCart";
+import { useAddCartItem } from "@/hooks/useAddCartItem";
 import { ModalType, useModalActions } from "@/store/modal";
 import { Product } from "@/types/service";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -31,7 +30,7 @@ type FormData = z.infer<ReturnType<typeof createSchema>>;
 export default function GiftCardForm({ countryCode, products }: Props) {
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
 
-  const { openModal, closeModal } = useModalActions();
+  const { openModal } = useModalActions();
 
   const [schema, setSchema] = useState(
     createSchema(selectedProduct.minFaceValue, selectedProduct.maxFaceValue)
@@ -41,7 +40,6 @@ export default function GiftCardForm({ countryCode, products }: Props) {
     register,
     control,
     handleSubmit,
-    getValues,
     formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onChange",
@@ -58,43 +56,27 @@ export default function GiftCardForm({ countryCode, products }: Props) {
     );
   }, [selectedProduct]);
 
-  const onSubmit = (data: FormData) => {
+  const { mutate: addItemToCart, isPending } = useAddCartItem();
+
+  const onSubmit = (data: FormData, e?: BaseSyntheticEvent) => {
     const newItem = {
       sourceCurrency: selectedProduct.price.currencyCode,
       sourceAmount: data.price ?? selectedProduct.maxFaceValue,
       productId: selectedProduct.id,
       quantity: data.quantity,
     };
-    createCart(undefined, {
-      onSuccess: (cartId) =>
-        addItemToCart(
-          { cartId, newItem },
-          { onSuccess: () => openModal(ModalType.Cart) }
-        ),
-    });
-  };
 
-  const { mutate: addItemToCart, isPending } = useAddToCart();
+    if (e) {
+      const buttonName = (
+        (e.nativeEvent as SubmitEvent).submitter as HTMLButtonElement
+      ).name;
 
-  const { mutate: createCart } = useCreateCart();
-
-  const addToCart = () => {
-    const newItem = {
-      sourceCurrency: selectedProduct.price.currencyCode,
-      sourceAmount: getValues("price") ?? selectedProduct.maxFaceValue,
-      productId: selectedProduct.id,
-      quantity: getValues("quantity"),
-    };
-
-    createCart(undefined, {
-      onSuccess: (cartId) =>
-        addItemToCart(
-          { cartId, newItem },
-          {
-            onSuccess: () => closeModal(),
-          }
-        ),
-    });
+      if (buttonName === "order") {
+        addItemToCart(newItem, {
+          onSuccess: () => openModal(ModalType.Cart),
+        });
+      } else addItemToCart(newItem);
+    }
   };
 
   return (
@@ -171,34 +153,23 @@ export default function GiftCardForm({ countryCode, products }: Props) {
 
       <div className="flex gap-x-3 justify-between">
         <Button
-          type="button"
+          type="submit"
           name="cart"
-          disabled={isPending}
-          onClick={addToCart}
+          disabled={!isValid || isPending}
           variant="alternate"
           className="w-full"
         >
           Add To Cart
         </Button>
-        <Button disabled={!isValid} type="submit" className="w-full">
-          Checkout
+        <Button
+          disabled={!isValid || isPending}
+          type="submit"
+          name="order"
+          className="w-full"
+        >
+          Order
         </Button>
       </div>
     </form>
   );
 }
-
-// const promise = mutateAsync({
-//   cartId: "11",
-//   payload: {
-//     cartitems: [
-//       {
-//         sourceCurrency: selectedProduct.price.currencyCode,
-//         sourceAmount:
-//           getValues("price").price ?? selectedProduct.maxFaceValue,
-//         productId: selectedProduct.id,
-//         quantity: getValues("quantity").quantity,
-//       },
-//     ],
-//   },
-// });

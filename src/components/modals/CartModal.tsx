@@ -1,16 +1,19 @@
 "use client";
 import { useCart } from "@/hooks/useCart";
+import { useGetProducts } from "@/hooks/useGetProducts";
 import { ModalType, useModalActions } from "@/store/modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useLocalStorage } from "usehooks-ts";
 import CartItem from "../CartItem";
 import ModalContainer from "../ModalContainer";
 import CartForm from "../forms/CartForm";
 
 export default function CartModal() {
   const { closeModal } = useModalActions();
-  const [sessionId] = useLocalStorage<string | null>("sessionId", null);
-  const { data: cart } = useCart(sessionId);
+  const { data: cart } = useCart();
+
+  const { logos } = useGetProducts(
+    cart?.cartItems.map((item) => item.productId)
+  );
 
   const totalamount = cart?.cartItems
     ? cart.cartItems
@@ -38,11 +41,11 @@ export default function CartModal() {
               {`You have ${cart?.cartItems.length ?? 0} items in your cart`}
             </h2>
             <div className="grid sm:grid-cols-2 gap-6 overflow-y-auto custom-scroll max-h-[300px] pr-3">
-              {cart?.cartItems.map((cartItem) => (
+              {cart?.cartItems.map((cartItem, index) => (
                 <CartItem
                   cartId={cart.id}
                   key={cartItem.id}
-                  logoUrl="https://bamboo-assets.s3.amazonaws.com/app-images/brand-images/2256/logo"
+                  logoUrl={logos[index]}
                   id={cartItem.id}
                   amount={cartItem.sourceAmount}
                 />

@@ -18,7 +18,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             "inline-flex items-center font-primary justify-center rounded-md px-3 h-10 border bg-background border-input text-sm text-[#DBE0EB] outline-none w-full",
             className
           )}
-          aria-label="Region"
+          onClick={(e) => e.stopPropagation()}
         >
           <SelectPrimitive.Value
             className="text-sm data-[placeholder]:text-sm"
@@ -34,6 +34,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
             side="bottom"
             sideOffset={5}
             className="overflow-hidden bg-background rounded-md z-50 w-[var(--radix-select-trigger-width)] max-h-[200px] border border-input p-2"
+            onClick={(e) => e.stopPropagation()}
           >
             {/* max-h-[var(--radix-select-content-available-height)] */}
             <SelectPrimitive.ScrollUpButton className="flex items-center w-full justify-center h-[25px] bg-white cursor-default">

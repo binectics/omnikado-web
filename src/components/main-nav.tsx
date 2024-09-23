@@ -1,5 +1,7 @@
 "use client";
 import { assets } from "@/assets";
+import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/hooks/useCart";
 import { useCreateCart } from "@/hooks/useCreateCart";
 import { ModalType, useModalActions } from "@/store/modal";
 import { Dialog } from "@headlessui/react";
@@ -15,13 +17,14 @@ export const MainNav = () => {
   const { OmnikadoLogo } = assets;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { openModal } = useModalActions();
- 
-  const { mutate } = useCreateCart();
+
+  const { mutate: createCart } = useCreateCart();
+
+  const { data: cart } = useCart();
 
   function open() {
     setMobileMenuOpen(false);
-
-    mutate(undefined, {
+    createCart(undefined, {
       onSuccess: () => openModal(ModalType.Cart),
     });
   }
@@ -63,10 +66,18 @@ export const MainNav = () => {
           </a>
           <button
             onClick={open}
-            className="text-sm font-semibold leading-6 text-primary font-primary"
+            className="text-sm font-semibold leading-6 text-primary font-primary relative flex items-center"
           >
             <ShoppingCartIcon className="h-6 w-6 inline" />
             Cart
+            {cart && cart.cartItems.length > 0 && (
+              <Badge
+                variant="destructive"
+                className="rounded-full size-5 text-[10px] text-center justify-center p-0 ml-1"
+              >
+                {cart.cartItems.length}
+              </Badge>
+            )}
           </button>
         </div>
       </nav>
@@ -109,10 +120,18 @@ export const MainNav = () => {
                 </a>
                 <button
                   onClick={open}
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50 flex items-center"
                 >
                   <ShoppingCartIcon className="h-6 w-6 inline" />
                   Cart
+                  {cart && cart.cartItems.length > 0 && (
+                    <Badge
+                      variant="destructive"
+                      className="rounded-full size-5 text-[10px] text-center justify-center p-0 ml-1"
+                    >
+                      {cart.cartItems.length}
+                    </Badge>
+                  )}
                 </button>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import client from "@/lib/axios";
 import { IResponse } from "@/types/auth";
 import { Cart } from "@/types/cart";
+import { Service } from "@/types/service";
 import axios, { AxiosError } from "axios";
 
 export async function createCart(payload: any) {
@@ -37,9 +38,12 @@ export async function removeCartItem({
   itemId: string;
 }) {
   try {
-    const res = await client.put(`/cart/${cartId}/remove-item`, {
-      cartItemId: itemId,
-    });
+    const res = await client.put<IResponse<Cart>>(
+      `/cart/${cartId}/remove-item`,
+      {
+        cartItemId: itemId,
+      }
+    );
     return res.data;
   } catch (error) {
     throw error as AxiosError;
@@ -51,6 +55,15 @@ export async function checkout(payload: any) {
     const res = await axios.post("/api/product/checkout", payload, {
       withCredentials: true,
     });
+    return res.data;
+  } catch (error) {
+    throw error as AxiosError;
+  }
+}
+
+export async function getProductById(productId: string) {
+  try {
+    const res = await client.get<IResponse<Service>>(`/product/${productId}`);
     return res.data;
   } catch (error) {
     throw error as AxiosError;
