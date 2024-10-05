@@ -1,10 +1,20 @@
 export interface Cart {
-  id: string;
+  id: number;
   createdAt: string;
   updatedAt: string;
   sessionID: string;
   status: string;
   cartItems: CartItem[];
+}
+
+export interface Order {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  status: string;
+  totalAmount: string;
+  providerResponse: null;
+  items: [];
 }
 
 export interface CartItem {

@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { Skeleton } from "./ui/skeleton";
 
 interface Props {
-  cartId: string;
+  cartId: number;
   id: string;
   logoUrl?: string;
   amount: number;

@@ -39,6 +39,7 @@ export default function ReactQueryClientProvider({
             }
             const error = response?.data.error[0] ?? "Something Went Wrong";
             toast.error(error);
+            toast.error(error, { containerId: "modal" });
           },
         }),
       })

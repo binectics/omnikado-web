@@ -19,24 +19,15 @@ interface Props {
 
 export default function ModalContainer({ modal, className, children }: Props) {
   const isOpen = useActiveModal(modal);
-  const { closeModal } = useModalActions();
-
-  const handleBackdropClick = useCallback(
-    (event: React.MouseEvent) => {
-      if (event.target === event.currentTarget) {
-        closeModal();
-      }
-    },
-    [closeModal]
-  );
 
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
-        // initialFocus={cancelButtonRef}
-        onClose={() => {}}
+        onClose={(e) => {
+          console.log(e);
+        }}
       >
         <TransitionChild
           as={Fragment}
@@ -50,10 +41,7 @@ export default function ModalContainer({ modal, className, children }: Props) {
           <div className="fixed inset-0 bg-[#14141580] backdrop-blur-[2px]" />
         </TransitionChild>
 
-        <div
-          className="fixed inset-0 z-20 w-screen overflow-y-auto"
-          onClick={handleBackdropClick}
-        >
+        <div className="fixed inset-0 z-20 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
             <TransitionChild
               as={Fragment}

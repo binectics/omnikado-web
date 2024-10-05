@@ -6,7 +6,7 @@ export interface IResponse<T = null> {
 }
 
 export interface User {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   isAdmin: boolean;

@@ -76,7 +76,7 @@ export default function CartModal() {
                 {`NGN ${totalamount.toLocaleString()}`}
               </span>
             </div>
-            <CartForm totalAmount={totalamount} />
+            <CartForm totalAmount={totalamount} cartId={cart?.id!} />
           </div>
         </div>
       </div>

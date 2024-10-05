@@ -47,3 +47,12 @@ export async function getCartById(params?: any) {
     throw error as AxiosError;
   }
 }
+
+export async function getProductById(productId: string) {
+  try {
+    const res = await client.get<IResponse<Service>>(`/product/${productId}`);
+    return res.data;
+  } catch (error) {
+    throw error as AxiosError;
+  }
+}

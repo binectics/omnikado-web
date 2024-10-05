@@ -23,7 +23,7 @@ export default function Card(service: Service) {
     >
       <div className="relative h-full">
         <p className="font-header text-right text-primary font-bold text-[28px] tracking-[-2%] absolute top-0 right-0 z-50">
-          $60
+          {service.currencyCode}
         </p>
         <Image
           src={service.logoUrl}

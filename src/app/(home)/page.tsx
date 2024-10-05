@@ -49,9 +49,9 @@ export default async function Home() {
         <Suspense
           fallback={
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:grid-cols-3 justify-items-center justify-between mt-16">
-              <Skeleton className="bg-[#1e1e1e] max-h-72 h-72 w-full rounded-xl" />
-              <Skeleton className="bg-[#1e1e1e] max-h-72 h-72 w-full rounded-xl" />
-              <Skeleton className="bg-[#1e1e1e] max-h-72 h-72 w-full rounded-xl" />
+              <Skeleton className="bg-skeleton max-h-72 h-72 w-full rounded-xl" />
+              <Skeleton className="bg-skeleton max-h-72 h-72 w-full rounded-xl" />
+              <Skeleton className="bg-skeleton max-h-72 h-72 w-full rounded-xl" />
             </div>
           }
         >

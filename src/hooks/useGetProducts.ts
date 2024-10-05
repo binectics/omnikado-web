@@ -1,4 +1,4 @@
-import { getProductById } from "@/actions/cart";
+import { getProductById } from "@/queries";
 import { IResponse } from "@/types/auth";
 import { Service } from "@/types/service";
 import { UseQueryResult, useQueries } from "@tanstack/react-query";

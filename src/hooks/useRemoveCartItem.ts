@@ -9,7 +9,7 @@ export const useRemoveCartItem = () => {
   return useMutation({
     mutationFn: removeCartItem,
     onSuccess: (res) => {
-      toast.success(res.message, {
+      toast.error(res.message, {
         containerId: "modal",
         position: "bottom-center",
       });

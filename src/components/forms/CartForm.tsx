@@ -1,11 +1,15 @@
+import useCheckout from "@/hooks/useCheckout";
 import usePaystack from "@/hooks/usePaystack";
 import { useModalActions } from "@/store/modal";
+import { useUser } from "@/store/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { HookConfig } from "react-paystack/dist/types";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import useCompleteOrder from "@/hooks/useCompleteOrder";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid Email" }),
@@ -18,41 +22,57 @@ const config: HookConfig = {
 };
 
 interface Props {
+  cartId: number;
   totalAmount: number;
 }
 
-export default function CartForm({ totalAmount }: Props) {
+export default function CartForm({ cartId, totalAmount }: Props) {
   const { closeModal } = useModalActions();
+  const user = useUser();
+  const router = useRouter();
 
-  const onSuccess = (reference: string) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const { mutate: completeOrder, isPending: isCompletingOrder } =
+    useCompleteOrder();
+
+  const onSuccess = (reference: string, orderId: string) => {
     console.log(reference);
-    closeModal();
+    completeOrder(orderId, {
+      onSettled: () => closeModal(),
+    });
   };
 
   const onClose = () => {
     console.log("Paystack Closed");
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  const email = watch("email");
+
+  const { mutate: startOrder, isPending } = useCheckout({
+    amount: totalAmount,
+    email,
+    onSuccess,
+    onClose,
   });
 
-  const initTransaction = usePaystack(config);
-
   const onSubmit = ({ email }: FormData) => {
-    initTransaction({
-      config: {
-        amount: totalAmount * 100,
-        email: email,
-        reference: new Date().getTime().toString(),
-      },
-      onSuccess,
-      onClose,
-    });
+    if (user) {
+      const order = {
+        email,
+        cartId: +cartId,
+        userId: +user.id,
+        firstName: user?.firstName,
+      };
+      startOrder(order);
+    } else router.push("/login");
   };
 
   return (
@@ -75,7 +95,11 @@ export default function CartForm({ totalAmount }: Props) {
       <Button type="button" variant={"alternate"} className="w-full">
         Apply
       </Button>
-      <Button type="submit" className="w-full">
+      <Button
+        type="submit"
+        disabled={isPending || isCompletingOrder}
+        className="w-full"
+      >
         Checkout
       </Button>
     </form>
