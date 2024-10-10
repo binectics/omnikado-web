@@ -1,11 +1,10 @@
 "use client";
 import { ModalType, useModalActions, useModalData } from "@/store/modal";
-import { Dialog, DialogTitle } from "@headlessui/react";
+import { DialogTitle } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import ModalContainer from "../ModalContainer";
 import GiftCardForm from "../forms/GiftCardForm";
-import { Service } from "@/types/service";
 
 export default function GiftCardModal() {
   const { closeModal } = useModalActions();
@@ -25,7 +24,7 @@ export default function GiftCardModal() {
                 className="max-h-12 w-auto object-contain"
               />
               <span className="inline-block text-xs font-primary text-primary h-fit mt-auto">
-                Available region: France, USA, Canada
+                {`Available region: ${service.countryCode}`}
               </span>
             </div>
             <XMarkIcon

@@ -43,6 +43,8 @@ input[data-autocompleted] {
     --ring: 0 0% 3.9%;
     --placeholder: 221, 13%, 46%;
 
+    --skeleton: 0, 0%, 12%;
+
     --radius: 0.5rem;
     --footer: 0, 0%, 76%;
   }

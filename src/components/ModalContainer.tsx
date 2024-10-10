@@ -8,7 +8,7 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
-import { Fragment, ReactNode } from "react";
+import { Fragment, ReactNode, useCallback } from "react";
 import { ToastContainer } from "react-toastify";
 
 interface Props {
@@ -19,15 +19,15 @@ interface Props {
 
 export default function ModalContainer({ modal, className, children }: Props) {
   const isOpen = useActiveModal(modal);
-  const { closeModal } = useModalActions();
 
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-50"
-        // initialFocus={cancelButtonRef}
-        onClose={closeModal}
+        onClose={(e) => {
+          console.log(e);
+        }}
       >
         <TransitionChild
           as={Fragment}

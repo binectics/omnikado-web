@@ -1,19 +1,24 @@
-import { useRemoveFromCart } from "@/hooks/useRemoveFromCart";
+import { useRemoveCartItem } from "@/hooks/useRemoveCartItem";
 import { cn, randomGradient } from "@/lib/utils";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useMemo } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 interface Props {
-  cartId: string;
+  cartId: number;
   id: string;
-  logoUrl: string;
+  logoUrl?: string;
   amount: number;
 }
 
 export default function CartItem({ id, cartId, logoUrl, amount }: Props) {
   const gradient = useMemo(() => randomGradient(), []);
-  const { mutate: removeItem, isPending } = useRemoveFromCart();
+  const { mutate: removeItem, isPending } = useRemoveCartItem();
+
+  if (!logoUrl)
+    return <Skeleton className="bg-[#1e1e1e] w-full rounded-2xl h-[200px]" />;
+
   return (
     <div
       className={cn(

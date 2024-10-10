@@ -26,7 +26,7 @@ export default function SearchFilter() {
       </div>
       <Select
         className="max-w-[280px]"
-        placeholder="Select a Filter"
+        defaultValue="All"
         onValueChange={setFilter}
       >
         {categories.map((category) => (
