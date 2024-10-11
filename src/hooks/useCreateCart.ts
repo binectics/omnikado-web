@@ -1,33 +1,40 @@
 import { createCart } from "@/actions/cart";
+import { useUser } from "@/store/user";
 import { Cart } from "@/types/cart";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { nanoid } from "nanoid";
 import { useLocalStorage } from "usehooks-ts";
 
 export const useCreateCart = () => {
-  const [sessionId, setSessionId] = useLocalStorage<string | null>(
+  const [sessionID, setSessionId] = useLocalStorage<string | null>(
     "sessionId",
     null
   );
   const queryClient = useQueryClient();
+  const user = useUser();
 
+  // Use UserId if Logged in instaed of
   return useMutation({
     mutationFn: async () => {
-      if (sessionId) {
-        return queryClient.getQueryData(["cart"]) as Cart;
+      const existingCart = queryClient.getQueryData(["cart"]) as Cart;
+
+      if (existingCart) {
+        return existingCart;
+      } else {
+        let cartId;
+
+        if (user) cartId = { userId: user.id };
+        else cartId = { sessionId: nanoid() };
+
+        const { data: cart } = await createCart({
+          ...cartId,
+          cartItems: [],
+        });
+
+        setSessionId(cart.sessionID);
+
+        return cart;
       }
-
-      // create a new SessionId
-      const newSessionId = nanoid();
-      // If no sessionId, create a new cart
-      const { data: cart } = await createCart({
-        sessionId: newSessionId,
-        cartItems: [],
-      });
-
-      setSessionId(newSessionId);
-
-      return cart;
     },
   });
 };

@@ -17,7 +17,7 @@ export async function addCartItem({
   cartId,
   newItem,
 }: {
-  cartId: string;
+  cartId: number;
   newItem: any;
 }) {
   try {
