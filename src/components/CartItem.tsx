@@ -10,9 +10,16 @@ interface Props {
   id: string;
   logoUrl?: string;
   amount: number;
+  currencyCode: string;
 }
 
-export default function CartItem({ id, cartId, logoUrl, amount }: Props) {
+export default function CartItem({
+  id,
+  cartId,
+  logoUrl,
+  currencyCode,
+  amount,
+}: Props) {
   const gradient = useMemo(() => randomGradient(), []);
   const { mutate: removeItem, isPending } = useRemoveCartItem();
 
@@ -22,7 +29,7 @@ export default function CartItem({ id, cartId, logoUrl, amount }: Props) {
   return (
     <div
       className={cn(
-        "w-full rounded-2xl relative bg-gradient-to-r p-8 h-[200px]",
+        "w-full rounded-2xl relative bg-gradient-to-r p-5 h-[200px]",
         gradient
       )}
     >
@@ -36,9 +43,9 @@ export default function CartItem({ id, cartId, logoUrl, amount }: Props) {
           stroke="#fff"
         />
       </button>
-      <div className="relative h-full overflow-hidden">
-        <p className="font-header text-left text-primary font-bold text-[28px] tracking-[-2%] z-50 text-wrap">
-          {`$${Number(amount).toLocaleString()}`}
+      <div className="h-full grid overflow-hidden">
+        <p className="font-header text-left text-primary font-bold text-2xl tracking-[-2%] z-50 text-wrap">
+          {`${currencyCode}${Math.round(amount).toLocaleString()}`}
         </p>
         <Image
           src={logoUrl}
@@ -46,7 +53,7 @@ export default function CartItem({ id, cartId, logoUrl, amount }: Props) {
           width={100}
           height={100}
           priority={true}
-          className="object-contain rounded-xl z-3 absolute bottom-0 left-0"
+          className="object-contain rounded-xl z-3 bottom-0 left-0 relative"
         />
       </div>
     </div>

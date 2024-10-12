@@ -47,7 +47,8 @@ export default function CartModal() {
                   key={cartItem.id}
                   logoUrl={logos[index]}
                   id={cartItem.id}
-                  amount={cartItem.sourceAmount}
+                  amount={cartItem.convertedToAmount}
+                  currencyCode={cartItem.convertedToCurrency}
                 />
               ))}
             </div>
