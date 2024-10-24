@@ -44,9 +44,12 @@ input[data-autocompleted] {
     --placeholder: 221, 13%, 46%;
 
     --skeleton: 0, 0%, 12%;
+    --modal: 240, 2%, 8%, 0.502;
 
     --radius: 0.5rem;
     --footer: 0, 0%, 76%;
+
+    --success: 133, 92%, 40%, 1;
   }
 }
 

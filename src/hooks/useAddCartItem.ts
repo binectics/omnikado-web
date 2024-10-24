@@ -1,7 +1,7 @@
 import { addCartItem } from "@/actions/cart";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import { useCreateCart } from "./useCreateCart";
+import { useToast } from "./use-toast";
 
 interface NewCartItem {
   sourceCurrency: string;
@@ -13,6 +13,7 @@ interface NewCartItem {
 export const useAddCartItem = () => {
   const queryClient = useQueryClient();
   const { mutateAsync: createCart } = useCreateCart();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (newItem: NewCartItem) => {
@@ -20,9 +21,8 @@ export const useAddCartItem = () => {
       return addCartItem({ cartId: cart.id, newItem });
     },
     onSuccess: (res) => {
-      toast.success(res.message, {
-        containerId: "modal",
-        position: "bottom-center",
+      toast({
+        title: res.message,
       });
     },
     onSettled: () => {

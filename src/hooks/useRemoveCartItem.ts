@@ -1,17 +1,18 @@
 import { removeCartItem } from "@/actions/cart";
 import { Cart } from "@/types/cart";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import { useToast } from "./use-toast";
 
 export const useRemoveCartItem = () => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   return useMutation({
     mutationFn: removeCartItem,
     onSuccess: (res) => {
-      toast.error(res.message, {
-        containerId: "modal",
-        position: "bottom-center",
+      toast({
+        title: res.message,
+        variant: "destructive",
       });
     },
     onMutate: ({ itemId }) => {

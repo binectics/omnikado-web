@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <section className="py-12 h-full min-h-screen flex items-center justify-center">
-      <div className="flex flex-col gap-8 md:gap-[72px] md:flex-row items-center md:items-start justify-center w-full">
+      <div className="flex flex-col gap-8 md:gap-[50px] md:flex-row items-center md:items-start justify-center w-full">
         <header className="md:max-w-xs w-full text-center md:text-left">
           <a
             href="#"
@@ -28,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </p>
           </div>
         </header>
-        <div className="max-w-[400px] w-full">{children}</div>
+        <div className="max-w-[450px] w-full">{children}</div>
       </div>
     </section>
   );

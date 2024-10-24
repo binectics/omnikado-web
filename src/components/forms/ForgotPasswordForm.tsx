@@ -3,32 +3,42 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForgotPassword } from "@/hooks/useForgotPassword";
+import { motion } from "framer-motion";
+import { transitionVariants } from "@/lib/utils";
 
 interface Props {
-  handlePage: () => void;
+  onComplete: (email: string) => void;
 }
 
 const schema = z.object({
   email: z.string().email(),
 });
 
-type formData = z.infer<typeof schema>;
+export type ForgotPasswordForm = z.infer<typeof schema>;
 
-export default function ForgotPasswordForm({ handlePage }: Props) {
+export default function ForgotPasswordForm({ onComplete }: Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<formData>({
+  } = useForm<ForgotPasswordForm>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: formData) => {
+  const { mutate: sendOTP, isPending } = useForgotPassword();
+
+  const onSubmit = (data: ForgotPasswordForm) => {
     console.log(data);
-    handlePage();
+    sendOTP(data, { onSuccess: () => onComplete(data.email) });
   };
   return (
-    <form
+    <motion.form
+      variants={transitionVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 0.75 }}
       onSubmit={handleSubmit(onSubmit)}
       className="border md:border-none border-primary rounded-2xl p-5 w-full"
     >
@@ -48,9 +58,13 @@ export default function ForgotPasswordForm({ handlePage }: Props) {
           className="mt-[6px] placeholder:text-primary bg-transparent rounded-lg"
         />
       </div>
-      <Button type="submit" className="rounded-lg py-[10px] w-full mt-6">
-        <span className="font-semibold text-base text-primary">Login</span>
+      <Button
+        type="submit"
+        className="rounded-lg py-[10px] w-full mt-6"
+        disabled={isPending}
+      >
+        <span className="font-semibold text-base text-primary">Continue</span>
       </Button>
-    </form>
+    </motion.form>
   );
 }

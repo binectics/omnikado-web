@@ -1,3 +1,5 @@
+import { IResponse } from "@/types/auth";
+import { AxiosResponse } from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -16,3 +18,15 @@ const gradients = [
 export function randomGradient() {
   return gradients[Math.floor(Math.random() * 5)];
 }
+
+export const transitionVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+  },
+  exit: {
+    opacity: 0,
+  },
+};

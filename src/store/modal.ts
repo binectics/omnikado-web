@@ -6,12 +6,35 @@ export enum ModalType {
   GiftCard,
   Cart,
   Success,
+  Failed,
 }
+
+// Define the data types for each modal
+interface ModalDataMap {
+  [ModalType.None]: null;
+  [ModalType.GiftCard]: Service;
+  [ModalType.Cart]: {
+    items: Array<{ id: string; quantity: number }>;
+    total: number;
+  };
+  [ModalType.Success]: {
+    message: string;
+    redirectUrl?: string;
+  };
+  [ModalType.Failed]: {
+    error: string;
+    code?: number;
+  };
+}
+
 interface ModalStoreProps {
   activeModal: ModalType;
-  modalData: Service | null;
+  modalData: ModalDataMap[keyof ModalDataMap] | null;
   actions: {
-    openModal: (modal: ModalType, payload?: any) => void;
+    openModal: <T extends ModalType>(
+      modal: T,
+      payload?: ModalDataMap[T]
+    ) => void;
     closeModal: () => void;
   };
 }
@@ -20,10 +43,10 @@ const useModalStore = create<ModalStoreProps>((set) => ({
   activeModal: ModalType.None,
   modalData: null,
   actions: {
-    openModal: (modal: ModalType, payload?: any) =>
+    openModal: (modal, payload) =>
       set({ activeModal: modal, modalData: payload ?? null }),
     closeModal: () => {
-      set({ activeModal: ModalType.None });
+      set({ activeModal: ModalType.None, modalData: null });
     },
   },
 }));
@@ -35,4 +58,8 @@ export const useActiveModal = (modal: ModalType) => {
 
 export const useModalActions = () => useModalStore((s) => s.actions);
 
-export const useModalData = () => useModalStore((s) => s.modalData);
+// Generic modal data hook with type inference
+export function useModalData<T extends ModalType>() {
+  const modalData = useModalStore((s) => s.modalData);
+  return modalData as ModalDataMap[T];
+}

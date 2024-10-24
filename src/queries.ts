@@ -30,7 +30,7 @@ export async function getAllServices(params?: any) {
 
 export async function getAllCategories() {
   try {
-    const res = await client.get<IResponse<string[]>>("/product/category");
+    const res = await client.get<IResponse<string[]>>("/product/category/all");
     return res.data.data;
   } catch (error) {
     throw error as AxiosError;
