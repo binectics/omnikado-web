@@ -73,6 +73,7 @@ export default function LoginForm() {
       </div>
       <Button
         type="submit"
+        disabled={isPending}
         className="rounded-lg py-[10px] w-full mt-6 font-semibold text-base text-primary"
       >
         {isPending ? <LoaderCircle className="animate-spin" /> : "Login"}

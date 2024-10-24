@@ -2,5 +2,11 @@
 import VerifyOTPForm from "@/components/forms/VerifyOTPForm";
 
 export default function VerifySignUpPage() {
-  return <VerifyOTPForm nextPage={() => console.log("next Page")} />;
+  return (
+    <VerifyOTPForm
+      onComplete={() => console.log("next Page")}
+      email={""}
+      prevForm={() => console.log("next Page")}
+    />
+  );
 }

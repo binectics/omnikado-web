@@ -13,7 +13,8 @@ export const useCreateCart = () => {
   const queryClient = useQueryClient();
   const user = useUser();
 
-  // Use UserId if Logged in instaed of
+  // Use UserId if Logged in instead of session ID
+  // An issue is occuring here
   return useMutation({
     mutationFn: async () => {
       const existingCart = queryClient.getQueryData(["cart"]) as Cart;
@@ -31,10 +32,9 @@ export const useCreateCart = () => {
           cartItems: [],
         });
 
-        setSessionId(cart.sessionID);
-
         return cart;
       }
     },
+    onSuccess: (cart) => setSessionId(cart.sessionID),
   });
 };

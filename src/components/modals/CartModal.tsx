@@ -1,14 +1,14 @@
 "use client";
 import { useCart } from "@/hooks/useCart";
 import { useGetProducts } from "@/hooks/useGetProducts";
-import { ModalType, useModalActions } from "@/store/modal";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ModalType } from "@/store/modal";
 import CartItem from "../CartItem";
+import ModalCloseButton from "../ModalCloseButton";
 import ModalContainer from "../ModalContainer";
 import CartForm from "../forms/CartForm";
+import { DialogTitle } from "../ui/dialog";
 
 export default function CartModal() {
-  const { closeModal } = useModalActions();
   const { data: cart } = useCart();
 
   const { logos } = useGetProducts(
@@ -28,12 +28,7 @@ export default function CartModal() {
     >
       <div className="bg-[#111111] px-4 pb-4 pt-5 sm:p-6 sm:pb-7 font-primary text-primary text-left">
         <div className="w-full flex flex-end mb-6 sm:mb-10">
-          <XMarkIcon
-            onClick={() => closeModal()}
-            className="size-7 md:size-6 ml-auto cursor-pointer"
-            strokeWidth={2}
-            stroke="#fff"
-          />
+          <ModalCloseButton />
         </div>
         <div className="md:grid md:grid-cols-[1.5fr_1fr] gap-6 justify-center">
           <div className="mb-6 md:mb-0">
@@ -54,9 +49,9 @@ export default function CartModal() {
             </div>
           </div>
           <div className="overflow-hidden">
-            <h1 className="font-header text-lg font-medium mb-5">
+            <DialogTitle className="font-header text-lg font-medium mb-5">
               Order Summary
-            </h1>
+            </DialogTitle>
             <div className="flex font-primary mb-1">
               <span className="font-medium text-sm">Total:</span>
               <span className="inline-block ml-auto text-wrap">
